@@ -81,15 +81,21 @@ body::after{
 .eyebrow::before{content:"";width:2.2em;height:1px;background:currentColor;flex:none}
 .lede{font-size:clamp(1rem,1.35vw,1.2rem);color:var(--on-dim);margin:0}
 
-html.js .rv{opacity:0;transform:translateY(24px);transition:opacity .8s ease,transform .9s cubic-bezier(.16,1,.3,1);transition-delay:var(--d,0s)}
-html.js .rv.in{opacity:1;transform:none}
-.mask{display:block;overflow:hidden}
-.mask > span{display:block;padding-block:.14em;margin-block:-.14em}
-html.js .mask > span{transform:translateY(110%);transition:transform 1s cubic-bezier(.16,1,.3,1);transition-delay:var(--d,0s)}
+/* Reveal is transform-only — never opacity. If a mobile webview freezes the
+   transition mid-flight the text is still fully readable, just offset a few px. */
+.mask{display:block}
+.mask > span{display:block}
+html.js .rv{transform:translateY(18px);transition:transform .7s cubic-bezier(.16,1,.3,1);transition-delay:var(--d,0s)}
+html.js .rv.in{transform:none}
+html.js .mask > span{transform:translateY(22px);transition:transform .8s cubic-bezier(.16,1,.3,1);transition-delay:var(--d,0s)}
 html.js .mask.in > span{transform:none}
-@media (prefers-reduced-motion:reduce){*{animation-duration:.001s!important;transition-duration:.001s!important}}
+@media (prefers-reduced-motion:reduce){
+  *{animation-duration:.001s!important;transition-duration:.001s!important}
+  html.js .rv,html.js .mask > span{transform:none}
+}
 
-.btn{display:inline-flex;align-items:center;gap:.55em;font-size:.86rem;font-weight:600;letter-spacing:.01em;
+.btn{appearance:none;-webkit-appearance:none;font:inherit;background:transparent;color:inherit;
+  display:inline-flex;align-items:center;gap:.55em;font-size:.86rem;font-weight:600;letter-spacing:.01em;
   padding:.9em 1.5em;border:1px solid currentColor;border-radius:2px;white-space:nowrap;cursor:pointer;
   transition:transform .35s cubic-bezier(.2,1,.3,1),background .3s,color .3s}
 .btn .a{transition:transform .35s cubic-bezier(.2,1,.3,1)}
@@ -116,10 +122,10 @@ html.js .mask.in > span{transform:none}
 .nav__links a{opacity:.62;transition:opacity .25s}
 .nav__links a:hover{opacity:1}
 .nav__act{display:flex;align-items:center;gap:.55rem}
-.tog{width:32px;height:32px;border:1px solid currentColor;border-radius:50%;background:transparent;color:inherit;cursor:pointer;display:grid;place-items:center;transition:transform .5s cubic-bezier(.2,1,.3,1)}
+.tog{appearance:none;-webkit-appearance:none;width:32px;height:32px;border:1px solid currentColor;border-radius:50%;background:transparent;color:inherit;cursor:pointer;display:grid;place-items:center;transition:transform .5s cubic-bezier(.2,1,.3,1)}
 .tog:hover{transform:rotate(45deg)}
 .tog svg{width:14px;height:14px}
-.chip{font-size:.74rem;font-weight:600;letter-spacing:.03em;padding:.5em .9em;border:1px solid currentColor;border-radius:2px;cursor:pointer;color:inherit;background:transparent;transition:transform .35s cubic-bezier(.2,1,.3,1),background .3s}
+.chip{appearance:none;-webkit-appearance:none;font:inherit;font-size:.74rem;font-weight:600;letter-spacing:.03em;padding:.5em .9em;border:1px solid currentColor;border-radius:2px;cursor:pointer;color:inherit;background:transparent;transition:transform .35s cubic-bezier(.2,1,.3,1),background .3s}
 .chip:hover{transform:translateY(-2px)}
 
 /* ============================ HERO ============================ */
@@ -192,9 +198,16 @@ html.js .mask.in > span{transform:none}
 
 /* ============================ BANDS ============================ */
 .band{padding:clamp(3rem,6vh,4.75rem) 0;border-top:1px solid var(--line)}
-.band--night{background:var(--night);color:var(--cream);border-color:rgba(251,244,224,.12)}
-.band--night .eyebrow{color:rgba(251,244,224,.45)}
-.band--night .lede{color:rgba(251,244,224,.62)}
+/* A night band forces the dark palette regardless of the page theme, so
+   every component inside it (cards, borders, dim text) resolves correctly. */
+.band--night{
+  background:var(--night);color:var(--cream);border-color:rgba(251,244,224,.12);
+  --on:var(--cream);
+  --on-dim:rgba(251,244,224,.64);
+  --on-mute:rgba(251,244,224,.46);
+  --line:rgba(251,244,224,.16);
+  --line-soft:rgba(251,244,224,.09);
+}
 .head{display:flex;flex-direction:column;align-items:flex-start;gap:.7rem;margin-bottom:2rem}
 .head .lede{max-width:44ch}
 
@@ -223,7 +236,7 @@ html.js .mask.in > span{transform:none}
 .forge__panel textarea:focus{outline:1px solid rgba(var(--fire),.5)}
 .forge__row{display:flex;gap:.6rem;flex-wrap:wrap;margin-top:.9rem}
 .forge__seed{display:flex;gap:.4rem;flex-wrap:wrap;margin-top:1rem}
-.forge__seed button{font-size:.72rem;color:rgba(251,244,224,.6);border:1px solid rgba(251,244,224,.16);background:transparent;padding:.4em .7em;border-radius:2px;cursor:pointer;transition:color .25s,border-color .25s}
+.forge__seed button{appearance:none;-webkit-appearance:none;font:inherit;font-size:.72rem;color:rgba(251,244,224,.6);border:1px solid rgba(251,244,224,.16);background:transparent;padding:.4em .7em;border-radius:2px;cursor:pointer;transition:color .25s,border-color .25s}
 .forge__seed button:hover{color:var(--cream);border-color:rgba(251,244,224,.45)}
 .forge__hint{margin-top:1rem;font-size:.74rem;color:rgba(251,244,224,.4);line-height:1.6}
 @media (max-width:820px){.forge{grid-template-columns:1fr}}
@@ -562,7 +575,8 @@ var CONFIG = {
   safe(function () {
     var items = $$(".rv, .mask");
     var showAll = function () { items.forEach(function (e) { e.classList.add("in"); }); };
-    var timer = setTimeout(showAll, 2600);
+    /* safety net only — a stalled transform-only reveal is still fully readable */
+    var timer = setTimeout(showAll, 4000);
     if (!("IntersectionObserver" in window)) { clearTimeout(timer); showAll(); return; }
     var io = new IntersectionObserver(function (ents) {
       ents.forEach(function (en) {
@@ -688,43 +702,51 @@ var CONFIG = {
       return lines.slice(0, 6);
     }
     function render() {
-      var dark = true;
-      var g = x.createRadialGradient(W * 0.5, H * 0.96, 40, W * 0.5, H * 0.3, H * 1.1);
-      g.addColorStop(0, "#2a2211"); g.addColorStop(0.4, "#181307"); g.addColorStop(1, "#0c0a06");
+      var g = x.createRadialGradient(W * 0.5, H * 0.5, 40, W * 0.5, H * 0.5, H * 1.05);
+      g.addColorStop(0, "#241d10"); g.addColorStop(0.45, "#181307"); g.addColorStop(1, "#0c0a06");
       x.fillStyle = g; x.fillRect(0, 0, W, H);
 
-      /* ripple motif, lower right */
-      x.strokeStyle = "rgba(255,233,176,.14)"; x.lineWidth = 2;
-      for (var k = 1; k <= 5; k++) { x.beginPath(); x.arc(W * 0.9, H * 1.02, k * 90, 0, TAU); x.stroke(); }
-      x.fillStyle = "rgba(255,233,176,.9)"; x.beginPath(); x.arc(W * 0.9, H * 1.02, 4, 0, TAU); x.fill();
+      /* ripples radiating from the centre — like sound from a spoken word */
+      x.strokeStyle = "rgba(255,233,176,.10)"; x.lineWidth = 2;
+      for (var k = 1; k <= 6; k++) { x.beginPath(); x.arc(W / 2, H / 2, k * 115, 0, TAU); x.stroke(); }
 
       /* border */
-      x.strokeStyle = "rgba(255,244,224,.2)"; x.lineWidth = 2; x.strokeRect(28, 28, W - 56, H - 56);
+      x.strokeStyle = "rgba(255,244,224,.18)"; x.lineWidth = 2; x.strokeRect(30, 30, W - 60, H - 60);
 
-      /* eyebrow */
+      x.textAlign = "center";
+      x.textBaseline = "alphabetic";
+
+      /* eyebrow — centred, top */
       x.fillStyle = "rgba(255,244,224,.5)";
       x.font = "600 22px 'Hanken Grotesk', sans-serif";
-      x.textBaseline = "alphabetic";
-      x.fillText("$ C T O   —   T H E   P O W E R   O F   C O M M U N I T Y", 70, 96);
+      x.fillText("$ C T O   —   T H E   P O W E R   O F   C O M M U N I T Y", W / 2, 100);
 
-      /* the line */
-      var line = ta && ta.value || "";
-      var size = line.length > 90 ? 52 : line.length > 55 ? 64 : 78;
+      /* the line — centred on both axes, every wrapped line centred under the last */
+      var line = (ta && ta.value || "").trim();
+      var size = line.length > 95 ? 50 : line.length > 58 ? 62 : 76;
       var font = "600 " + size + "px 'Fraunces', Georgia, serif";
-      var lines = wrap(line, font, W - 200);
+      var lines = wrap(line, font, W - 260);
       x.font = font; x.fillStyle = "#fdf6e4";
-      var lh = size * 1.18, blockH = lines.length * lh;
-      var y = H / 2 - blockH / 2 + size * 0.8;
-      for (var i = 0; i < lines.length; i++) { x.fillText(lines[i], 90, y + i * lh); }
+      var lh = size * 1.24;
+      var startY = H / 2 - (lines.length * lh) / 2 + size * 0.66;
+      for (var i = 0; i < lines.length; i++) x.fillText(lines[i], W / 2, startY + i * lh);
 
-      /* footer mark */
-      if (logoOK) x.drawImage(logo, 70, H - 118, 52, 52);
-      x.fillStyle = "rgba(255,244,224,.85)";
+      /* footer — centred group: logo + wordmark, tagline under it */
+      var footY = H - 96;
       x.font = "700 30px 'Fraunces', serif";
-      x.fillText("$CTO", logoOK ? 136 : 70, H - 80);
+      var ctoW = x.measureText("$CTO").width, logoS = 52, gap = 14;
+      var groupW = (logoOK ? logoS + gap : 0) + ctoW;
+      var gx = W / 2 - groupW / 2;
+      if (logoOK) x.drawImage(logo, gx, footY - logoS + 8, logoS, logoS);
+      x.textAlign = "left";
+      x.fillStyle = "rgba(255,244,224,.85)";
+      x.fillText("$CTO", gx + (logoOK ? logoS + gap : 0), footY);
+      x.textAlign = "center";
       x.fillStyle = "rgba(255,244,224,.4)";
-      x.font = "500 20px 'Hanken Grotesk', sans-serif";
-      x.fillText("community-take-over on BNB Chain", logoOK ? 136 : 70, H - 54);
+      x.font = "500 19px 'Hanken Grotesk', sans-serif";
+      x.fillText("community-take-over on BNB Chain", W / 2, footY + 30);
+
+      x.textAlign = "left";
     }
     renderForge = render;
 
