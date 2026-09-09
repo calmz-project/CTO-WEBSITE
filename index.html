@@ -318,7 +318,7 @@ html.js .mask.in > span{transform:none}
       <div class="live__head">
         <span class="live__dot" aria-hidden="true"></span>
         <span class="live__label">On chain &mdash; live</span>
-        <span class="live__note" id="liveNote">Figures update from the DexScreener API every 30s. <a id="chartLink" href="#" target="_blank" rel="noopener">Open the chart ↗</a></span>
+        <span class="live__note" id="liveNote"><a id="chartLink" href="#" target="_blank" rel="noopener">Open the chart ↗</a></span>
       </div>
       <div class="live__mult">
         <b id="stMult">&mdash;</b>
@@ -636,8 +636,8 @@ var CONFIG = {
       band.classList.toggle("off", !live);
       var note = $("#liveNote");
       if (note) note.innerHTML = live
-        ? 'Updating from the DexScreener API every 30s. <a href="' + CONFIG.chartUrl + '" target="_blank" rel="noopener">Open the chart ↗</a>'
-        : 'Sample figures &mdash; the live feed loads on the published site. <a href="' + CONFIG.chartUrl + '" target="_blank" rel="noopener">See it on DexScreener ↗</a>';
+        ? '<a href="' + CONFIG.chartUrl + '" target="_blank" rel="noopener">Open the chart ↗</a>'
+        : 'Sample figures. <a href="' + CONFIG.chartUrl + '" target="_blank" rel="noopener">Open the chart ↗</a>';
     }
 
     /* show believable numbers straightaway, then try to go live */
@@ -658,7 +658,7 @@ var CONFIG = {
             buys24: tx.buys || 0, sells24: tx.sells || 0
           }, true);
         })
-        .catch(function () { /* keep the seed figures on screen */ });
+        .catch(function () { band.classList.add("off"); /* keep the seed figures + sample note on screen */ });
     }
     load();
     setInterval(load, 30000);
