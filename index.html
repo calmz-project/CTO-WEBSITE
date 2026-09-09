@@ -345,8 +345,8 @@ html.js .mask.in > span{transform:none}
         <div><dt>Buys / sells 24h</dt><dd id="stTx">&mdash;</dd></div>
         <div><dt>Days lit</dt><dd id="stDays">&mdash;</dd></div>
       </dl>
-      <p class="lede" style="margin-top:1.4rem;font-size:.82rem;color:rgba(251,244,224,.38)">
-        Highest it has printed so far: <b id="peak" style="color:rgba(251,244,224,.65);font-weight:600">about $7K</b>. When it clears that, edit one line in the code &mdash; it isn't hard-wired anywhere else.
+      <p class="lede" style="margin-top:1.4rem;font-size:.82rem;color:rgba(251,244,224,.45)">
+        Highest it has printed so far &mdash; <b id="peak" style="color:rgba(251,244,224,.72);font-weight:600">about $7K</b>.
       </p>
     </div>
   </section>
@@ -476,7 +476,7 @@ var CONFIG = {
   supply   : "1,000,000,000",
   tax      : "3 / 3",
   maxWallet: "3%",               /* 3% of supply per wallet, set by the community */
-  peakLabel: "about $7K",        /* the only place the ATH lives — bump it when it's beaten */
+  peakLabel: "about $7K",        /* ATH shown under the live grid. This is the ONLY place it lives — change it here when the peak is beaten. */
   startMc  : 100,                /* the hundred dollars the multiple is measured from */
   launchTs : 1786305647000,      /* pool-creation time; "days lit" ticks from this even offline */
 
