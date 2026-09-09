@@ -1,0 +1,986 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>$CTO &mdash; The Power of Community</title>
+<meta name="description" content="$CTO — a community launch on BNB Chain. A hundred dollars and a name the group agreed on. One billion supply, 3/3 tax, keys renounced. Live figures on-chain." />
+<meta name="theme-color" content="#100d08" />
+<meta property="og:title" content="$CTO &mdash; The Power of Community" />
+<meta property="og:description" content="A hundred dollars and a name the group agreed on. Everything since has been a show of hands." />
+<meta property="og:type" content="website" />
+<meta property="og:image" content="assets/img/logo.png" />
+<link rel="icon" href="assets/img/logo.png" />
+<link rel="apple-touch-icon" href="assets/img/logo.png" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,400;1,9..144,600&family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+<style>
+/* ==========================================================================
+   $CTO — THE POWER OF COMMUNITY
+   Butter · ink black · warm white. A fireside told at night.
+   ========================================================================== */
+:root{
+  --paper:#efdfab; --paper-raise:#e8d59b;
+  --night:#100d08; --night-raise:#171308;
+  --ink:#15110a; --cream:#fbf4e0;
+  --fire:255,233,176;
+
+  --surface:var(--paper); --raise:var(--paper-raise);
+  --on:var(--ink); --on-dim:rgba(21,17,10,.62); --on-mute:rgba(21,17,10,.42);
+  --line:rgba(21,17,10,.16); --line-soft:rgba(21,17,10,.09);
+  color-scheme:light;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --surface:var(--night); --raise:var(--night-raise);
+    --on:var(--cream); --on-dim:rgba(251,244,224,.6); --on-mute:rgba(251,244,224,.4);
+    --line:rgba(251,244,224,.14); --line-soft:rgba(251,244,224,.08);
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --surface:var(--night); --raise:var(--night-raise);
+  --on:var(--cream); --on-dim:rgba(251,244,224,.6); --on-mute:rgba(251,244,224,.4);
+  --line:rgba(251,244,224,.14); --line-soft:rgba(251,244,224,.08); color-scheme:dark;
+}
+
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+body{
+  margin:0;background:var(--surface);color:var(--on);
+  font-family:"Hanken Grotesk",ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;
+  font-size:clamp(15px,.4vw + 13.6px,16.5px);line-height:1.6;
+  -webkit-font-smoothing:antialiased;overflow-x:hidden;transition:background .5s ease,color .5s ease;
+}
+img{max-width:100%;display:block}
+a{color:inherit;text-decoration:none}
+::selection{background:var(--on);color:var(--surface)}
+
+body::after{
+  content:"";position:fixed;inset:0;z-index:60;pointer-events:none;opacity:.4;mix-blend-mode:overlay;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.05'/%3E%3C/svg%3E");
+}
+.firelight{position:fixed;left:0;top:0;width:46vmax;height:46vmax;z-index:2;pointer-events:none;
+  transform:translate(-50%,-50%);opacity:0;transition:opacity 1.2s ease;mix-blend-mode:screen;
+  background:radial-gradient(circle,rgba(var(--fire),.06) 0%,transparent 60%)}
+.firelight.on{opacity:1}
+
+.wrap{width:min(92vw,1280px);margin-inline:auto}
+
+.serif{font-family:"Fraunces",Georgia,"Times New Roman",serif}
+.tell{font-family:"Fraunces",Georgia,serif;font-weight:600;line-height:.94;letter-spacing:-.02em;margin:0;text-wrap:balance}
+.tell em{font-style:italic;font-weight:600}
+.t1{font-size:clamp(3.1rem,10vw,8.4rem)}
+.t2{font-size:clamp(2rem,5.4vw,4.2rem);line-height:.98}
+.eyebrow{font-size:.72rem;font-weight:600;letter-spacing:.24em;text-transform:uppercase;color:var(--on-mute);margin:0;display:flex;align-items:center;gap:.8em}
+.eyebrow::before{content:"";width:2.2em;height:1px;background:currentColor;flex:none}
+.lede{font-size:clamp(1rem,1.35vw,1.2rem);color:var(--on-dim);margin:0}
+
+html.js .rv{opacity:0;transform:translateY(24px);transition:opacity .8s ease,transform .9s cubic-bezier(.16,1,.3,1);transition-delay:var(--d,0s)}
+html.js .rv.in{opacity:1;transform:none}
+.mask{display:block;overflow:hidden}
+.mask > span{display:block;padding-block:.14em;margin-block:-.14em}
+html.js .mask > span{transform:translateY(110%);transition:transform 1s cubic-bezier(.16,1,.3,1);transition-delay:var(--d,0s)}
+html.js .mask.in > span{transform:none}
+@media (prefers-reduced-motion:reduce){*{animation-duration:.001s!important;transition-duration:.001s!important}}
+
+.btn{display:inline-flex;align-items:center;gap:.55em;font-size:.86rem;font-weight:600;letter-spacing:.01em;
+  padding:.9em 1.5em;border:1px solid currentColor;border-radius:2px;white-space:nowrap;cursor:pointer;
+  transition:transform .35s cubic-bezier(.2,1,.3,1),background .3s,color .3s}
+.btn .a{transition:transform .35s cubic-bezier(.2,1,.3,1)}
+.btn:hover{transform:translateY(-3px)}
+.btn:hover .a{transform:translate(3px,-3px)}
+.btn--solid{background:var(--cream);color:var(--night);border-color:var(--cream)}
+.btn--solid:hover{background:transparent;color:var(--cream)}
+.btn--ink{background:var(--on);color:var(--surface);border-color:var(--on)}
+.btn--ink:hover{background:transparent;color:var(--on)}
+.iconbtn{display:inline-grid;place-items:center;width:2.9em;height:2.9em;border:1px solid currentColor;border-radius:2px;
+  transition:transform .35s cubic-bezier(.2,1,.3,1),background .3s,color .3s}
+.iconbtn:hover{transform:translateY(-3px)}
+.iconbtn svg{width:1.05em;height:1.05em;fill:currentColor}
+
+/* ============================ NAV ============================ */
+.nav{position:fixed;inset:0 0 auto 0;z-index:50;display:flex;align-items:center;gap:1.4rem;
+  padding:1.25rem clamp(1rem,4vw,2.4rem);color:var(--cream);
+  transition:padding .4s ease,background .4s ease,color .4s ease,border-color .4s ease;border-bottom:1px solid transparent}
+.nav.tuck{padding-block:.7rem;background:color-mix(in srgb,var(--surface) 90%,transparent);color:var(--on);
+  backdrop-filter:blur(10px);border-bottom-color:var(--line)}
+.nav__brand{display:flex;align-items:center;gap:.6rem;font-family:"Fraunces",serif;font-weight:700;font-size:1.2rem}
+.nav__brand img{width:30px;height:30px;border-radius:50%}
+.nav__links{display:flex;gap:1.4rem;margin-inline:auto;font-size:.8rem;font-weight:500;letter-spacing:.03em}
+.nav__links a{opacity:.62;transition:opacity .25s}
+.nav__links a:hover{opacity:1}
+.nav__act{display:flex;align-items:center;gap:.55rem}
+.tog{width:32px;height:32px;border:1px solid currentColor;border-radius:50%;background:transparent;color:inherit;cursor:pointer;display:grid;place-items:center;transition:transform .5s cubic-bezier(.2,1,.3,1)}
+.tog:hover{transform:rotate(45deg)}
+.tog svg{width:14px;height:14px}
+.chip{font-size:.74rem;font-weight:600;letter-spacing:.03em;padding:.5em .9em;border:1px solid currentColor;border-radius:2px;cursor:pointer;color:inherit;background:transparent;transition:transform .35s cubic-bezier(.2,1,.3,1),background .3s}
+.chip:hover{transform:translateY(-2px)}
+
+/* ============================ HERO ============================ */
+.hero{position:relative;min-height:100svh;display:flex;flex-direction:column;justify-content:flex-end;
+  padding:8rem clamp(1rem,4vw,2.4rem) 3rem;overflow:hidden;background:var(--night);color:var(--cream);isolation:isolate}
+.hero__canvas,.hero__fallback{position:absolute;inset:0;width:100%;height:100%}
+.hero__fallback{z-index:0;background:
+  radial-gradient(60% 50% at 62% 92%,rgba(var(--fire),.22),transparent 70%),
+  radial-gradient(120% 90% at 50% 6%,#241d10,#100d08 60%)}
+.hero__canvas{z-index:1;cursor:crosshair}
+.hero__vin{position:absolute;inset:0;z-index:2;pointer-events:none;background:
+  linear-gradient(90deg,rgba(12,10,6,.74) 0%,rgba(12,10,6,.34) 34%,transparent 58%),
+  linear-gradient(0deg,rgba(12,10,6,.72) 0%,transparent 32%),
+  radial-gradient(120% 80% at 50% 55%,transparent 42%,rgba(8,6,3,.6) 100%)}
+.hero__grid{position:relative;z-index:3;width:min(92vw,1280px);margin-inline:auto;
+  display:grid;grid-template-columns:minmax(0,1fr) auto;gap:2rem 3rem;align-items:end}
+.hero__eyebrow{margin-bottom:1.4rem;color:rgba(251,244,224,.55)}
+.hero__title{max-width:16ch}
+.hero__sub{margin:1.6rem 0 0;max-width:46ch;color:rgba(251,244,224,.74);font-size:clamp(1rem,1.4vw,1.18rem)}
+.hero__cta{display:flex;flex-wrap:wrap;align-items:center;gap:.65rem;margin-top:2rem;color:var(--cream)}
+.hero__cta .sep{width:1px;height:1.8rem;background:rgba(251,244,224,.2);margin-inline:.3rem}
+.hero__hint{margin-top:1.2rem;font-size:.72rem;letter-spacing:.16em;text-transform:uppercase;color:rgba(251,244,224,.4)}
+.hero__hint b{color:rgba(251,244,224,.7);font-weight:600}
+.hero__spec{border:1px solid rgba(251,244,224,.16);background:rgba(251,244,224,.03);backdrop-filter:blur(2px);
+  padding:1.3rem 1.4rem;min-width:250px;align-self:end}
+.hero__spec dl{margin:0}
+.hero__spec div{display:flex;justify-content:space-between;gap:1.2rem;padding:.7rem 0;border-bottom:1px solid rgba(251,244,224,.1);font-size:.76rem}
+.hero__spec div:last-child{border-bottom:0}
+.hero__spec dt{color:rgba(251,244,224,.5);letter-spacing:.1em;text-transform:uppercase}
+.hero__spec dd{margin:0;color:var(--cream);text-align:right;word-break:break-all}
+.hero__spec .ca{cursor:pointer}
+.hero__spec .ca:hover{color:rgb(var(--fire))}
+@media (max-width:900px){.hero__grid{grid-template-columns:1fr}.hero__spec{min-width:0;width:100%}}
+.scrolldot{position:absolute;left:50%;bottom:1.2rem;z-index:3;transform:translateX(-50%);width:1px;height:44px;background:rgba(251,244,224,.2);overflow:hidden}
+.scrolldot::after{content:"";position:absolute;inset:0;background:var(--cream);transform:translateY(-100%);animation:sd 2.4s cubic-bezier(.4,0,.2,1) infinite}
+@keyframes sd{0%{transform:translateY(-100%)}55%{transform:translateY(0)}100%{transform:translateY(100%)}}
+#ember-secret{position:absolute;left:0;right:0;bottom:4.4rem;z-index:3;text-align:center;font-family:"Fraunces",serif;font-style:italic;
+  color:rgba(var(--fire),.9);font-size:1.1rem;opacity:0;transition:opacity .8s ease}
+#ember-secret.show{opacity:1}
+
+/* ============================ LIVE BAND ============================ */
+.live{background:var(--night);color:var(--cream);border-block:1px solid rgba(251,244,224,.12);padding:clamp(2.5rem,6vh,4rem) 0}
+.live__head{display:flex;flex-wrap:wrap;align-items:baseline;gap:.8rem 1.4rem;margin-bottom:1.8rem}
+.live__dot{width:8px;height:8px;border-radius:50%;background:#7bd88f;box-shadow:0 0 10px #7bd88f;flex:none;align-self:center}
+.live.off .live__dot{background:rgba(251,244,224,.3);box-shadow:none}
+.live__dot::after{content:"";position:absolute}
+.live .pulse{position:relative}
+.live:not(.off) .live__dot{animation:pl 2s ease-in-out infinite}
+@keyframes pl{0%,100%{opacity:1}50%{opacity:.25}}
+.live__label{font-size:.72rem;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:rgba(251,244,224,.55)}
+.live__note{font-size:.74rem;color:rgba(251,244,224,.4)}
+.live__note a{border-bottom:1px solid rgba(251,244,224,.3)}
+.live__mult{display:flex;flex-wrap:wrap;align-items:baseline;gap:.4rem 1rem;margin-bottom:1.8rem}
+.live__mult b{font-family:"Fraunces",serif;font-weight:600;font-size:clamp(3rem,9vw,6.4rem);line-height:.9;letter-spacing:-.03em}
+.live__mult span{font-size:.8rem;letter-spacing:.16em;text-transform:uppercase;color:rgba(251,244,224,.5)}
+.live__grid{display:grid;grid-template-columns:repeat(6,1fr);gap:1px;background:rgba(251,244,224,.14);border:1px solid rgba(251,244,224,.14)}
+.live__grid > div{background:var(--night);padding:1.5rem 1.3rem}
+.live__grid dt{margin:0;font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;color:rgba(251,244,224,.42)}
+.live__grid dd{margin:.6rem 0 0;font-family:"Fraunces",serif;font-weight:600;font-size:clamp(1.3rem,2.6vw,1.9rem);line-height:1;color:var(--cream)}
+@media (max-width:1000px){.live__grid{grid-template-columns:repeat(3,1fr)}}
+@media (max-width:560px){.live__grid{grid-template-columns:1fr 1fr}}
+
+/* ============================ MARQUEE ============================ */
+.marq{background:var(--on);color:var(--surface);overflow:hidden;padding:.7rem 0;border-block:1px solid var(--on)}
+.marq__row{display:flex;white-space:nowrap;width:max-content;animation:mq 40s linear infinite}
+.marq:hover .marq__row{animation-play-state:paused}
+.marq__row span{font-family:"Fraunces",serif;font-weight:600;font-size:1.05rem;padding-inline:1.6rem;display:inline-flex;align-items:center;gap:1.6rem}
+.marq__row span::after{content:"\2217";opacity:.5}
+@keyframes mq{to{transform:translateX(-50%)}}
+
+/* ============================ BANDS ============================ */
+.band{padding:clamp(3rem,6vh,4.75rem) 0;border-top:1px solid var(--line)}
+.band--night{background:var(--night);color:var(--cream);border-color:rgba(251,244,224,.12)}
+.band--night .eyebrow{color:rgba(251,244,224,.45)}
+.band--night .lede{color:rgba(251,244,224,.62)}
+.head{display:flex;flex-direction:column;align-items:flex-start;gap:.7rem;margin-bottom:2rem}
+.head .lede{max-width:44ch}
+
+.split{display:grid;grid-template-columns:1.25fr 1fr;gap:2rem 3.4rem;align-items:start}
+.split p{margin:0 0 1rem}
+.split p:last-child{margin-bottom:0}
+.split b{font-weight:600}
+@media (max-width:820px){.split{grid-template-columns:1fr}}
+
+.cards{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-top:2.4rem}
+.card{border:1px solid var(--line);padding:1.5rem;transition:transform .4s cubic-bezier(.2,1,.3,1),border-color .3s}
+.card:hover{transform:translateY(-4px);border-color:var(--on)}
+.card i{font-style:normal;font-size:.7rem;letter-spacing:.16em;text-transform:uppercase;color:var(--on-mute);display:block;margin-bottom:.7rem}
+.card b{font-family:"Fraunces",serif;font-weight:600;font-size:1.15rem;display:block}
+.card p{margin:.5rem 0 0;font-size:.9rem;color:var(--on-dim)}
+@media (max-width:820px){.cards{grid-template-columns:1fr 1fr}}
+@media (max-width:520px){.cards{grid-template-columns:1fr}}
+
+/* ============================ MEME FORGE ============================ */
+.forge{display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:2rem 2.6rem;align-items:start;margin-top:2.4rem}
+.forge__stage{border:1px solid rgba(251,244,224,.16);background:#0b0906;padding:.8rem}
+.forge__stage canvas{width:100%;display:block;aspect-ratio:1200/675}
+.forge__panel label{display:block;font-size:.7rem;letter-spacing:.16em;text-transform:uppercase;color:rgba(251,244,224,.45);margin-bottom:.5rem}
+.forge__panel textarea{width:100%;min-height:120px;resize:vertical;background:rgba(251,244,224,.04);border:1px solid rgba(251,244,224,.18);
+  color:var(--cream);font-family:"Fraunces",serif;font-size:1.05rem;line-height:1.35;padding:.9rem 1rem;border-radius:2px}
+.forge__panel textarea:focus{outline:1px solid rgba(var(--fire),.5)}
+.forge__row{display:flex;gap:.6rem;flex-wrap:wrap;margin-top:.9rem}
+.forge__seed{display:flex;gap:.4rem;flex-wrap:wrap;margin-top:1rem}
+.forge__seed button{font-size:.72rem;color:rgba(251,244,224,.6);border:1px solid rgba(251,244,224,.16);background:transparent;padding:.4em .7em;border-radius:2px;cursor:pointer;transition:color .25s,border-color .25s}
+.forge__seed button:hover{color:var(--cream);border-color:rgba(251,244,224,.45)}
+.forge__hint{margin-top:1rem;font-size:.74rem;color:rgba(251,244,224,.4);line-height:1.6}
+@media (max-width:820px){.forge{grid-template-columns:1fr}}
+
+/* ============================ CLOSE + FOOT ============================ */
+.close{text-align:center;padding:clamp(4rem,9vh,7rem) 0}
+.close .row{display:flex;gap:.65rem;justify-content:center;flex-wrap:wrap;margin-top:2rem;color:var(--cream)}
+.foot{background:var(--night);color:var(--cream);padding:3rem 0 3.5rem;border-top:1px solid rgba(251,244,224,.12)}
+.foot__top{display:flex;flex-wrap:wrap;gap:1.2rem 2rem;justify-content:space-between;align-items:baseline}
+.foot__mark{font-family:"Fraunces",serif;font-weight:700;font-size:1.7rem}
+.foot__links{display:flex;gap:1.4rem;font-size:.78rem}
+.foot__links a{color:rgba(251,244,224,.55);border-bottom:1px solid transparent;transition:color .25s,border-color .25s}
+.foot__links a:hover{color:var(--cream);border-bottom-color:rgba(251,244,224,.4)}
+.foot__ca{margin-top:1.4rem;font-size:.74rem;color:rgba(251,244,224,.42);word-break:break-all;cursor:pointer;letter-spacing:.02em}
+.foot__ca:hover{color:rgb(var(--fire))}
+.foot__fine{margin-top:1.6rem;max-width:62ch;font-size:.78rem;color:rgba(251,244,224,.4);line-height:1.7}
+.foot__c{margin-top:1.1rem;font-size:.72rem;color:rgba(251,244,224,.38)}
+
+.toast{position:fixed;left:50%;bottom:2rem;transform:translate(-50%,calc(100% + 3rem));background:var(--on);color:var(--surface);
+  font-size:.8rem;font-weight:500;padding:.75rem 1.3rem;border-radius:2px;z-index:80;transition:transform .5s cubic-bezier(.2,1,.3,1)}
+.toast.show{transform:translate(-50%,0)}
+@media (max-width:820px){.nav__links{display:none}}
+</style>
+</head>
+<body>
+
+<div class="firelight" id="firelight" aria-hidden="true"></div>
+
+<!-- ============================ NAV ============================ -->
+<header class="nav" id="nav">
+  <a class="nav__brand" href="#top" aria-label="CTO"><img src="assets/img/logo.png" alt="" /><span>$CTO</span></a>
+  <nav class="nav__links" aria-label="Primary">
+    <a href="#story">The Story</a><a href="#fire">On&nbsp;Chain</a><a href="#how">How It Works</a><a href="#forge">Make a Meme</a><a href="#circle">The Circle</a>
+  </nav>
+  <div class="nav__act">
+    <button class="tog" id="tog" type="button" aria-label="Light or dark">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 3v2M12 19v2M5 5l1.5 1.5M17.5 17.5L19 19M3 12h2M19 12h2M5 19l1.5-1.5M17.5 6.5L19 5"/></svg>
+    </button>
+    <button class="chip" id="chipCa" type="button">Copy CA&nbsp;·&nbsp;<span id="caShort">0x41b6…2b66</span></button>
+  </div>
+</header>
+
+<main id="top">
+
+  <!-- ============================ HERO ============================ -->
+  <section class="hero" id="hero">
+    <div class="hero__fallback" aria-hidden="true"></div>
+    <canvas class="hero__canvas" id="scene" aria-hidden="true"></canvas>
+    <div class="hero__vin" aria-hidden="true"></div>
+
+    <div class="hero__grid">
+      <div>
+        <p class="eyebrow hero__eyebrow rv">$CTO &nbsp;·&nbsp; a community launch on BNB Chain</p>
+        <h1 class="tell t1 hero__title">
+          <span class="mask"><span>Community</span></span>
+          <span class="mask"><span><em>take over</em>.</span></span>
+        </h1>
+        <p class="hero__sub rv">A hundred dollars and a name the group agreed on &mdash; that was the whole
+        starting kit. Everything since, the supply, the tax, the wallet cap, the direction, has been
+        a show of hands.</p>
+        <div class="hero__cta rv">
+          <a class="btn btn--solid" id="buy1" href="#" target="_blank" rel="noopener">Buy $CTO <span class="a">↗</span></a>
+          <span class="sep" aria-hidden="true"></span>
+          <a class="iconbtn" id="tg1" href="https://t.me/COMMUNITY1455" target="_blank" rel="noopener" aria-label="Telegram">
+            <svg viewBox="0 0 24 24"><path d="M9.8 15.6 9.6 20c.5 0 .7-.2 1-.5l2.4-2.3 5 3.6c.9.5 1.6.2 1.8-.8l3.3-15.4c.3-1.3-.5-1.8-1.4-1.5L1.4 9.6C.1 10.1.2 10.9 1.2 11.2l5 1.6L17.8 5.5c.5-.4 1-.2.6.2z"/></svg>
+          </a>
+          <a class="iconbtn" id="x1" href="https://x.com/CTO_BNB" target="_blank" rel="noopener" aria-label="X">
+            <svg viewBox="0 0 24 24"><path d="M18.9 2H22l-7 8 8.3 12h-6.5l-5-6.6L5.5 22H2.3l7.5-8.6L2 2h6.6l4.6 6.1zM17.7 20.1h1.8L7.3 3.8H5.4z"/></svg>
+          </a>
+        </div>
+        <p class="hero__hint rv" id="sparkHint">Poke the fire &mdash; <b id="sparks">0</b> sparks fed today</p>
+      </div>
+
+      <div class="hero__spec rv">
+        <dl>
+          <div><dt>Ticker</dt><dd>$CTO</dd></div>
+          <div><dt>Chain</dt><dd>BNB Chain</dd></div>
+          <div><dt>Supply</dt><dd id="specSupply">1,000,000,000</dd></div>
+          <div><dt>Tax</dt><dd id="specTax">3 / 3</dd></div>
+          <div><dt>Max wallet</dt><dd id="specMax">3%</dd></div>
+          <div><dt>Contract</dt><dd class="ca" id="specCa">0x41b68a48446522de90d5dc590a595a2aceb42b66</dd></div>
+        </dl>
+      </div>
+    </div>
+    <p id="ember-secret" aria-hidden="true">the circle sees you</p>
+    <div class="scrolldot" aria-hidden="true"></div>
+  </section>
+
+  <!-- ============================ LIVE / ON-CHAIN ============================ -->
+  <section class="live off" id="fire">
+    <div class="wrap">
+      <div class="live__head">
+        <span class="live__dot" aria-hidden="true"></span>
+        <span class="live__label">On chain &mdash; live</span>
+        <span class="live__note" id="liveNote">Figures update from the DexScreener API every 30s. <a id="chartLink" href="#" target="_blank" rel="noopener">Open the chart ↗</a></span>
+      </div>
+      <div class="live__mult">
+        <b id="stMult">&mdash;</b>
+        <span>market cap, measured from the hundred dollars it started at</span>
+      </div>
+      <dl class="live__grid rv">
+        <div><dt>Price</dt><dd id="stPrice">&mdash;</dd></div>
+        <div><dt>Market cap</dt><dd id="stMc">&mdash;</dd></div>
+        <div><dt>Liquidity</dt><dd id="stLiq">&mdash;</dd></div>
+        <div><dt>Volume 24h</dt><dd id="stVol">&mdash;</dd></div>
+        <div><dt>Buys / sells 24h</dt><dd id="stTx">&mdash;</dd></div>
+        <div><dt>Days lit</dt><dd id="stDays">&mdash;</dd></div>
+      </dl>
+      <p class="lede" style="margin-top:1.4rem;font-size:.82rem;color:rgba(251,244,224,.38)">
+        Highest it has printed so far: <b id="peak" style="color:rgba(251,244,224,.65);font-weight:600">about $7K</b>. When it clears that, edit one line in the code &mdash; it isn't hard-wired anywhere else.
+      </p>
+    </div>
+  </section>
+
+  <!-- ============================ MARQUEE ============================ -->
+  <div class="marq" aria-hidden="true">
+    <div class="marq__row" id="marqRow">
+      <span>take it over</span><span>keys with nobody</span><span>one billion, three and three</span><span>decisions in the open</span><span>still here</span><span>the circle holds</span>
+      <span>take it over</span><span>keys with nobody</span><span>one billion, three and three</span><span>decisions in the open</span><span>still here</span><span>the circle holds</span>
+    </div>
+  </div>
+
+  <!-- ============================ 01 · THE STORY ============================ -->
+  <section class="band" id="story">
+    <div class="wrap">
+      <div class="head">
+        <p class="eyebrow rv">01 &mdash; The Story</p>
+        <p class="lede rv">A launch with no pitch deck. Just a dare.</p>
+      </div>
+      <div class="split">
+        <h2 class="tell t2">
+          <span class="mask"><span>Nobody was</span></span>
+          <span class="mask"><span>put in <em>charge</em>.</span></span>
+        </h2>
+        <div class="rv">
+          <p>$CTO went out with one instruction &mdash; <b>take it over</b> &mdash; and nothing else
+          decided in advance. The group picked the name and the picture. It set the supply at
+          <b>one billion</b> and the tax at <b>three and three</b>. It drew the max-wallet line itself.</p>
+          <p>Then the entire allocation went into the liquidity pool and the keys went to no one.
+          There is no treasury to spend, no team allocation to unlock, no quarter on a roadmap to
+          miss.</p>
+          <p>It has been up and it has been down, and it has been discussed at length by people who
+          have never held a single token. Through all of it the group has done the one thing a group
+          can do that a founder cannot: <b>stay</b>.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================ 02 · HOW IT WORKS ============================ -->
+  <section class="band band--night" id="how">
+    <div class="wrap">
+      <div class="head">
+        <p class="eyebrow rv">02 &mdash; How It Works</p>
+        <p class="lede rv">Four plain facts. Verify every one of them yourself.</p>
+      </div>
+      <div class="cards">
+        <article class="card rv"><i>Liquidity</i><b>Keys with nobody</b><p>100% of supply seeded the pool at launch. No treasury wallet to drain, no vesting cliff to dread.</p></article>
+        <article class="card rv"><i>Governance</i><b>Decided in the open</b><p>Name, art, supply, tax, wallet cap &mdash; each one was a group call, on the record, before day one.</p></article>
+        <article class="card rv"><i>Scope</i><b>Nothing pending</b><p>No "utility coming soon", no unreleased app. What is here is the whole of it.</p></article>
+        <article class="card rv"><i>Proof</i><b>Public ledger</b><p>It's a token on BNB Chain. Read the contract, watch the pool, check the holders. Trust nothing on faith.</p></article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================ 03 · MEME FORGE ============================ -->
+  <section class="band band--night" id="forge">
+    <div class="wrap">
+      <div class="head">
+        <p class="eyebrow rv">03 &mdash; Make a Meme</p>
+        <p class="lede rv">There's no gallery to fill. The archive is whatever the community makes &mdash; so make one.</p>
+      </div>
+      <div class="forge">
+        <div class="forge__stage rv">
+          <canvas id="forgeCanvas" width="1200" height="675"></canvas>
+        </div>
+        <div class="forge__panel rv">
+          <label for="forgeText">Your line</label>
+          <textarea id="forgeText" maxlength="140" spellcheck="false">a hundred dollars and a show of hands</textarea>
+          <div class="forge__row">
+            <button class="btn btn--solid" id="forgeSave" type="button">Save card <span class="a">↓</span></button>
+            <button class="btn" id="forgeCopy" type="button" style="color:var(--cream)">Copy image</button>
+          </div>
+          <div class="forge__seed" id="forgeSeed"><!-- filled per visitor by JS --></div>
+          <p class="forge__hint">Card renders at 1200&times;675 &mdash; sized for X. If your browser blocks the download, right-click the card and save it.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================ 04 · THE CIRCLE ============================ -->
+  <section class="band band--night close" id="circle">
+    <div class="wrap">
+      <p class="eyebrow rv" style="justify-content:center">04 &mdash; The Circle</p>
+      <h2 class="tell t2 rv" style="margin-top:1rem">Pull up a stool.<br /><em>The fire is already lit.</em></h2>
+      <p class="lede rv" style="max-width:38ch;margin:1rem auto 0">Everything happens in the Telegram. That's the room.</p>
+      <div class="row rv">
+        <a class="btn btn--solid" id="tg2" href="https://t.me/COMMUNITY1455" target="_blank" rel="noopener">Open the Telegram <span class="a">↗</span></a>
+        <a class="btn" id="x2" href="https://x.com/CTO_BNB" target="_blank" rel="noopener" style="color:var(--cream)">Follow on X <span class="a">↗</span></a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="foot">
+  <div class="wrap">
+    <div class="foot__top">
+      <span class="foot__mark">$CTO</span>
+      <div class="foot__links">
+        <a id="tg3" href="https://t.me/COMMUNITY1455" target="_blank" rel="noopener">Telegram</a>
+        <a id="x3" href="https://x.com/CTO_BNB" target="_blank" rel="noopener">X</a>
+        <a id="chart3" href="#" target="_blank" rel="noopener">Chart</a>
+      </div>
+    </div>
+    <p class="foot__ca" id="footCa">0x41b68a48446522de90d5dc590a595a2aceb42b66</p>
+    <p class="foot__fine">$CTO is a community meme token on BNB Chain. No team, no dev, no promise of
+    profit or return. Nothing here is financial advice. Crypto is volatile &mdash; check the contract
+    yourself and only risk what you can afford to lose.</p>
+    <p class="foot__c">&copy; <span id="yr"></span> $CTO</p>
+  </div>
+</footer>
+
+<div class="toast" id="toast">Copied</div>
+
+<script>
+/* ==========================================================================
+   $CTO — no libraries.  Edit CONFIG for content.
+   Live figures come from the DexScreener public API on your own domain;
+   in restricted previews they just stay as "—". Page reads fine with no JS.
+   ========================================================================== */
+var CONFIG = {
+  contract : "0x41b68a48446522de90d5dc590a595a2aceb42b66",
+  telegram : "https://t.me/COMMUNITY1455",
+  twitter  : "https://x.com/CTO_BNB",
+  buyUrl   : "https://pancakeswap.finance/swap?outputCurrency=0x41b68a48446522de90d5dc590a595a2aceb42b66&chain=bsc",
+  chartUrl : "https://dexscreener.com/bsc/0x41b68a48446522de90d5dc590a595a2aceb42b66",
+  supply   : "1,000,000,000",
+  tax      : "3 / 3",
+  maxWallet: "3%",               /* 3% of supply per wallet, set by the community */
+  peakLabel: "about $7K",        /* the only place the ATH lives — bump it when it's beaten */
+  startMc  : 100,                /* the hundred dollars the multiple is measured from */
+  launchTs : 1786305647000,      /* pool-creation time; "days lit" ticks from this even offline */
+
+  /* Shown instantly on load and kept if the live API can't be reached
+     (e.g. inside a sandboxed preview). Refresh these now and then so the
+     fallback stays believable; the published site overwrites them live. */
+  seed     : { priceUsd: "0.0001509", marketCap: 1509, liquidityUsd: 904, volume24: 205, buys24: 15, sells24: 16 },
+
+  /* Meme Forge starter lines. Each visitor gets a different slice of these,
+     rotating on every visit — add your own freely. */
+  lines: [
+    "a hundred dollars and a show of hands",
+    "the founder is the group",
+    "read the contract, then talk",
+    "we don't wait on a roadmap",
+    "no team, no scribe, still the loudest room on the timeline",
+    "keys with nobody, floor with everybody",
+    "they wrote us off at the hundred",
+    "the circle chose it, the circle keeps it",
+    "no vesting, no unlock, no excuse",
+    "one billion, three and three — that's the whole spec",
+    "you can't rug a room",
+    "the dev is a group chat",
+    "brought a chart to a bonfire",
+    "hold the line, keep the fire",
+    "utility is a room full of people who stayed",
+    "check the pool, not the promises",
+    "still lit",
+    "every meme is a page of the lore"
+  ]
+};
+
+(function () {
+  "use strict";
+  var d = document, root = d.documentElement, TAU = Math.PI * 2;
+  var $  = function (s, r) { return (r || d).querySelector(s); };
+  var $$ = function (s, r) { return Array.prototype.slice.call((r || d).querySelectorAll(s)); };
+  var reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var fine = matchMedia("(pointer: fine)").matches;
+  var safe = function (fn) { try { fn(); } catch (e) { if (window.console) console.warn("[CTO]", e); } };
+  var set = function (sel, txt) { var e = $(sel); if (e) e.textContent = txt; };
+
+  /* ---- content ---- */
+  safe(function () {
+    var c = CONFIG;
+    set("#caShort", c.contract.slice(0, 6) + "…" + c.contract.slice(-4));
+    set("#specCa", c.contract); set("#footCa", c.contract);
+    set("#specSupply", c.supply); set("#specTax", c.tax);
+    set("#specMax", c.maxWallet || "—");
+    set("#peak", c.peakLabel);
+    $$('a[href^="https://t.me"], #tg1, #tg2, #tg3').forEach(function (a) { a.href = c.telegram; });
+    $$('a[href*="x.com/CTO"], #x1, #x2, #x3').forEach(function (a) { a.href = c.twitter; });
+    $$("#buy1").forEach(function (a) { a.href = c.buyUrl; });
+    $$("#chartLink, #chart3").forEach(function (a) { a.href = c.chartUrl; });
+    set("#yr", new Date().getFullYear());
+  });
+
+  /* ---- theme ---- */
+  safe(function () {
+    var KEY = "cto-theme", saved = null;
+    try { saved = localStorage.getItem(KEY); } catch (e) {}
+    if (saved) root.setAttribute("data-theme", saved);
+    var b = $("#tog"); if (!b) return;
+    b.addEventListener("click", function () {
+      var cur = root.getAttribute("data-theme") || (matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+      var next = cur === "dark" ? "light" : "dark";
+      root.setAttribute("data-theme", next);
+      try { localStorage.setItem(KEY, next); } catch (e) {}
+      safe(renderForge);
+    });
+  });
+
+  /* ---- toast + copy ---- */
+  var toast = function (msg) {
+    var t = $("#toast"); if (!t) return;
+    t.textContent = msg || "Copied"; t.classList.add("show");
+    setTimeout(function () { t.classList.remove("show"); }, 1700);
+  };
+  safe(function () {
+    function copy() {
+      if (navigator.clipboard) navigator.clipboard.writeText(CONFIG.contract).then(function () { toast("Contract address copied"); }, function () { toast("Contract address copied"); });
+      else toast("Contract address copied");
+    }
+    ["#chipCa", "#footCa", "#specCa"].forEach(function (s) { var e = $(s); if (e) e.addEventListener("click", copy); });
+  });
+
+  /* ---- nav tuck ---- */
+  safe(function () {
+    var n = $("#nav");
+    var f = function () { n.classList.toggle("tuck", scrollY > innerHeight * 0.82); };
+    f(); addEventListener("scroll", f, { passive: true });
+  });
+
+  /* ---- reveals ---- */
+  root.classList.add("js");
+  safe(function () {
+    var items = $$(".rv, .mask");
+    var showAll = function () { items.forEach(function (e) { e.classList.add("in"); }); };
+    var timer = setTimeout(showAll, 2600);
+    if (!("IntersectionObserver" in window)) { clearTimeout(timer); showAll(); return; }
+    var io = new IntersectionObserver(function (ents) {
+      ents.forEach(function (en) {
+        if (!en.isIntersecting) return;
+        var el = en.target; io.unobserve(el);
+        var sibs = Array.prototype.slice.call(el.parentNode.children).filter(function (n) {
+          return n.classList && (n.classList.contains("rv") || n.classList.contains("mask"));
+        });
+        el.style.setProperty("--d", (Math.max(0, sibs.indexOf(el)) * 0.08) + "s");
+        el.classList.add("in");
+      });
+    }, { threshold: 0.16, rootMargin: "0px 0px -6% 0px" });
+    items.forEach(function (e) { io.observe(e); });
+    requestAnimationFrame(function () {
+      var vh = innerHeight || 800, i = 0;
+      items.forEach(function (el) {
+        var r = el.getBoundingClientRect();
+        if (r.top < vh * 0.95 && r.bottom > 0) { el.style.setProperty("--d", (i++ * 0.07) + "s"); el.classList.add("in"); io.unobserve(el); }
+      });
+    });
+  });
+
+  /* ---- cursor firelight ---- */
+  if (fine && !reduce) safe(function () {
+    var fl = $("#firelight"); if (!fl) return;
+    var x = innerWidth / 2, y = innerHeight * 0.4, tx = x, ty = y;
+    addEventListener("pointermove", function (e) { tx = e.clientX; ty = e.clientY; fl.classList.add("on"); });
+    (function loop() {
+      x += (tx - x) * 0.09; y += (ty - y) * 0.09;
+      fl.style.transform = "translate(" + x.toFixed(1) + "px," + y.toFixed(1) + "px) translate(-50%,-50%)";
+      requestAnimationFrame(loop);
+    })();
+  });
+
+  /* ==========================================================================
+     LIVE ON-CHAIN FIGURES — DexScreener public API
+     ========================================================================== */
+  safe(function () {
+    var band = $("#fire"); if (!band) return;
+    function money(n) {
+      if (!(n > 0)) return "—";
+      if (n >= 1e9) return "$" + (n / 1e9).toFixed(2) + "B";
+      if (n >= 1e6) return "$" + (n / 1e6).toFixed(2) + "M";
+      if (n >= 1e3) return "$" + (n / 1e3).toFixed(1) + "K";
+      return "$" + Math.round(n);
+    }
+    function price(p) {
+      p = parseFloat(p); if (!(p > 0)) return "—";
+      if (p >= 1) return "$" + p.toFixed(3);
+      var s = p.toFixed(12).replace(/0+$/, "");
+      var m = s.match(/^0\.(0*)(\d{0,4})/);
+      return m ? "$0." + m[1] + m[2] : "$" + s;
+    }
+    function mult(n) {
+      var m = n / (CONFIG.startMc || 100);
+      if (!(m >= 1)) return "—";
+      return (m >= 100 ? Math.round(m) : m.toFixed(1).replace(/\.0$/, "")) + "×";
+    }
+    function days() {
+      return CONFIG.launchTs ? Math.max(1, Math.floor((Date.now() - CONFIG.launchTs) / 864e5)) + "" : "—";
+    }
+    function paint(v, live) {
+      var mc = v.marketCap || 0;
+      set("#stPrice", price(v.priceUsd));
+      set("#stMc", money(mc));
+      set("#stLiq", money(v.liquidityUsd));
+      set("#stVol", money(v.volume24));
+      set("#stTx", (v.buys24 || 0) + " / " + (v.sells24 || 0));
+      set("#stDays", days());
+      set("#stMult", mult(mc));
+      band.classList.toggle("off", !live);
+      var note = $("#liveNote");
+      if (note) note.innerHTML = live
+        ? 'Updating from the DexScreener API every 30s. <a href="' + CONFIG.chartUrl + '" target="_blank" rel="noopener">Open the chart ↗</a>'
+        : 'Sample figures &mdash; the live feed loads on the published site. <a href="' + CONFIG.chartUrl + '" target="_blank" rel="noopener">See it on DexScreener ↗</a>';
+    }
+
+    /* show believable numbers straightaway, then try to go live */
+    if (CONFIG.seed) paint(CONFIG.seed, false);
+
+    function load() {
+      fetch("https://api.dexscreener.com/latest/dex/tokens/" + CONFIG.contract, { cache: "no-store" })
+        .then(function (r) { return r.json(); })
+        .then(function (j) {
+          var ps = (j && j.pairs || []).slice().sort(function (a, b) {
+            return (b.liquidity && b.liquidity.usd || 0) - (a.liquidity && a.liquidity.usd || 0);
+          });
+          var p = ps[0]; if (!p) throw new Error("no pair");
+          var tx = p.txns && p.txns.h24 || {};
+          paint({
+            priceUsd: p.priceUsd, marketCap: p.marketCap || p.fdv || 0,
+            liquidityUsd: p.liquidity && p.liquidity.usd, volume24: p.volume && p.volume.h24,
+            buys24: tx.buys || 0, sells24: tx.sells || 0
+          }, true);
+        })
+        .catch(function () { /* keep the seed figures on screen */ });
+    }
+    load();
+    setInterval(load, 30000);
+  });
+
+  /* ==========================================================================
+     MEME FORGE
+     ========================================================================== */
+  function renderForge() {}
+  safe(function () {
+    var cv = $("#forgeCanvas"); if (!cv || !cv.getContext) return;
+    var x = cv.getContext("2d"), W = cv.width, H = cv.height;
+    var ta = $("#forgeText");
+    var logo = new Image(); var logoOK = false;
+    logo.onload = function () { logoOK = true; render(); };
+    logo.src = "assets/img/logo.png";
+
+    function wrap(text, font, maxW) {
+      x.font = font;
+      var words = (text || "").trim().split(/\s+/), lines = [], cur = "";
+      for (var i = 0; i < words.length; i++) {
+        var test = cur ? cur + " " + words[i] : words[i];
+        if (x.measureText(test).width > maxW && cur) { lines.push(cur); cur = words[i]; }
+        else cur = test;
+      }
+      if (cur) lines.push(cur);
+      return lines.slice(0, 6);
+    }
+    function render() {
+      var dark = true;
+      var g = x.createRadialGradient(W * 0.5, H * 0.96, 40, W * 0.5, H * 0.3, H * 1.1);
+      g.addColorStop(0, "#2a2211"); g.addColorStop(0.4, "#181307"); g.addColorStop(1, "#0c0a06");
+      x.fillStyle = g; x.fillRect(0, 0, W, H);
+
+      /* ripple motif, lower right */
+      x.strokeStyle = "rgba(255,233,176,.14)"; x.lineWidth = 2;
+      for (var k = 1; k <= 5; k++) { x.beginPath(); x.arc(W * 0.9, H * 1.02, k * 90, 0, TAU); x.stroke(); }
+      x.fillStyle = "rgba(255,233,176,.9)"; x.beginPath(); x.arc(W * 0.9, H * 1.02, 4, 0, TAU); x.fill();
+
+      /* border */
+      x.strokeStyle = "rgba(255,244,224,.2)"; x.lineWidth = 2; x.strokeRect(28, 28, W - 56, H - 56);
+
+      /* eyebrow */
+      x.fillStyle = "rgba(255,244,224,.5)";
+      x.font = "600 22px 'Hanken Grotesk', sans-serif";
+      x.textBaseline = "alphabetic";
+      x.fillText("$ C T O   —   T H E   P O W E R   O F   C O M M U N I T Y", 70, 96);
+
+      /* the line */
+      var line = ta && ta.value || "";
+      var size = line.length > 90 ? 52 : line.length > 55 ? 64 : 78;
+      var font = "600 " + size + "px 'Fraunces', Georgia, serif";
+      var lines = wrap(line, font, W - 200);
+      x.font = font; x.fillStyle = "#fdf6e4";
+      var lh = size * 1.18, blockH = lines.length * lh;
+      var y = H / 2 - blockH / 2 + size * 0.8;
+      for (var i = 0; i < lines.length; i++) { x.fillText(lines[i], 90, y + i * lh); }
+
+      /* footer mark */
+      if (logoOK) x.drawImage(logo, 70, H - 118, 52, 52);
+      x.fillStyle = "rgba(255,244,224,.85)";
+      x.font = "700 30px 'Fraunces', serif";
+      x.fillText("$CTO", logoOK ? 136 : 70, H - 80);
+      x.fillStyle = "rgba(255,244,224,.4)";
+      x.font = "500 20px 'Hanken Grotesk', sans-serif";
+      x.fillText("community-take-over on BNB Chain", logoOK ? 136 : 70, H - 54);
+    }
+    renderForge = render;
+
+    /* rotate the starter lines: a different slice of the pool for every
+       visitor and every reload */
+    (function rotate() {
+      var pool = (CONFIG.lines || []).slice();
+      if (pool.length < 5) return;
+      for (var s = pool.length - 1; s > 0; s--) {   /* shuffle */
+        var j = Math.floor(Math.random() * (s + 1)), t = pool[s]; pool[s] = pool[j]; pool[j] = t;
+      }
+      ta.value = pool[0];
+      var seed = $("#forgeSeed");
+      if (seed) {
+        seed.innerHTML = "";
+        for (var i = 1; i <= 4; i++) {
+          var b = d.createElement("button");
+          b.type = "button"; b.textContent = pool[i];
+          seed.appendChild(b);
+        }
+      }
+    })();
+
+    if (d.fonts && d.fonts.load) {
+      Promise.all([d.fonts.load("600 78px 'Fraunces'"), d.fonts.load("600 22px 'Hanken Grotesk'")]).then(render, render);
+    }
+    render();
+    ta.addEventListener("input", render);
+    $$("#forgeSeed button").forEach(function (b) {
+      b.addEventListener("click", function () { ta.value = b.textContent; render(); ta.focus(); });
+    });
+    $("#forgeSave").addEventListener("click", function () {
+      render();
+      try {
+        var a = d.createElement("a");
+        a.download = "cto-" + Date.now() + ".png";
+        a.href = cv.toDataURL("image/png");
+        d.body.appendChild(a); a.click(); a.remove();
+      } catch (e) { toast("Right-click the card to save it"); }
+    });
+    $("#forgeCopy").addEventListener("click", function () {
+      render();
+      if (!(navigator.clipboard && window.ClipboardItem && cv.toBlob)) { toast("Right-click the card to copy it"); return; }
+      cv.toBlob(function (blob) {
+        navigator.clipboard.write([new window.ClipboardItem({ "image/png": blob })])
+          .then(function () { toast("Card copied to clipboard"); }, function () { toast("Right-click the card to copy it"); });
+      });
+    });
+  });
+
+  /* ==========================================================================
+     THE FIRE — canvas night scene. Own rAF loop. CSS fallback if this dies.
+     Exposes spark() so the hero can be poked.
+     ========================================================================== */
+  var spark = null;
+  safe(function () {
+    var cv = $("#scene"); if (!cv || !cv.getContext) return;
+    var x = cv.getContext("2d");
+    var W = 0, H = 0, DPR = Math.min(devicePixelRatio || 1, 2);
+    var mx = 0.5, my = 0.5, tmx = 0.5, tmy = 0.5, sy = 0, boost = 0;
+    var stars = [], embers = [], seats = [], t = 0, small = false;
+
+    function newEmber(rand, strong) {
+      return {
+        x: 0.44 + Math.random() * 0.12, y: rand ? Math.random() : 1,
+        vx: (Math.random() - 0.5) * (strong ? 0.0016 : 0.0006),
+        vy: (strong ? 0.006 : 0.0016) + Math.random() * (strong ? 0.004 : 0.0026),
+        r: (strong ? 1.4 : 0.6) + Math.random() * 2, life: 0.5 + Math.random() * 0.6
+      };
+    }
+    function resize() {
+      W = cv.clientWidth; H = cv.clientHeight; small = W < 700;
+      cv.width = W * DPR; cv.height = H * DPR; x.setTransform(DPR, 0, 0, DPR, 0, 0);
+      stars = [];
+      var ns = small ? 90 : 240;
+      for (var i = 0; i < ns; i++) stars.push({ x: Math.random() * W, y: Math.random() * H * 0.72, r: Math.random() * 1.4 + 0.25, p: Math.random() * TAU, s: 0.4 + Math.random() * 1.6, d: Math.random() < 0.15 ? 2 : (Math.random() < 0.5 ? 1 : 0) });
+      embers = [];
+      var ne = small ? 26 : 58;
+      for (var j = 0; j < ne; j++) embers.push(newEmber(true));
+      seats = [];
+      var rows = small ? [[10, 0.6], [8, 0.74]] : [[16, 0.52], [13, 0.64], [10, 0.76]];
+      rows.forEach(function (row, ri) {
+        for (var k = 0; k < row[0]; k++) {
+          var tt = row[0] === 1 ? 0.5 : k / (row[0] - 1);
+          seats.push({ tt: tt, spread: row[1], row: ri, sc: 0.9 + Math.random() * 0.22 });
+        }
+      });
+    }
+    function figure(px, py, sc, front) {
+      x.save(); x.translate(px, py); x.scale(sc, sc);
+      x.fillStyle = "#050403";
+      x.beginPath(); x.moveTo(0, 0);
+      x.bezierCurveTo(-26, 0, -34, -26, -30, -54);
+      x.bezierCurveTo(-27, -74, -12, -88, 0, -88);
+      x.bezierCurveTo(12, -88, 27, -74, 30, -54);
+      x.bezierCurveTo(34, -26, 26, 0, 0, 0);
+      x.closePath(); x.fill();
+      x.beginPath(); x.arc(0, -104, 15, 0, TAU); x.fill();
+      x.strokeStyle = "rgba(255,233,176," + (front ? 0.22 : 0.12) + ")"; x.lineWidth = 2.4;
+      x.beginPath(); x.arc(0, -104, 15, -2.5, -0.4); x.stroke();
+      x.beginPath(); x.moveTo(-2, -6); x.bezierCurveTo(-20, -18, -26, -40, -22, -60); x.stroke();
+      x.restore();
+    }
+    function draw() {
+      t += 0.016; if (boost > 0) boost -= 0.02;
+      mx += (tmx - mx) * 0.05; my += (tmy - my) * 0.05;
+      var fx = W * 0.5, fy = H * 0.9;
+      var flick = 0.82 + Math.sin(t * 7) * 0.06 + Math.sin(t * 17 + 1) * 0.04 + Math.random() * 0.03 + Math.max(0, boost) * 0.5;
+
+      x.clearRect(0, 0, W, H);
+      var sky = x.createRadialGradient(fx, fy, 40, fx, fy - H * 0.2, H * 1.15);
+      sky.addColorStop(0, "#2a2211"); sky.addColorStop(0.35, "#181307"); sky.addColorStop(1, "#0c0a06");
+      x.fillStyle = sky; x.fillRect(0, 0, W, H);
+
+      var px = mx - 0.5, py2 = my - 0.5;
+      for (var i = 0; i < stars.length; i++) {
+        var st = stars[i];
+        var a = 0.18 + (Math.sin(t * st.s + st.p) * 0.5 + 0.5) * 0.7;
+        x.globalAlpha = a * 0.9; x.fillStyle = "#ffe9b8";
+        x.beginPath(); x.arc(st.x + px * (6 + st.d * 10), st.y + py2 * (4 + st.d * 6) - sy * (0.01 + st.d * 0.02), st.r, 0, TAU); x.fill();
+      }
+      x.globalAlpha = 1;
+
+      var moonX = W * 0.8 + px * 14, moonY = H * 0.2 + py2 * 10;
+      var mg = x.createRadialGradient(moonX, moonY, 0, moonX, moonY, 120);
+      mg.addColorStop(0, "rgba(247,238,208,.9)"); mg.addColorStop(0.28, "rgba(247,238,208,.5)"); mg.addColorStop(1, "rgba(247,238,208,0)");
+      x.fillStyle = mg; x.beginPath(); x.arc(moonX, moonY, 120, 0, TAU); x.fill();
+      x.fillStyle = "#f7eecf"; x.beginPath(); x.arc(moonX, moonY, 34, 0, TAU); x.fill();
+
+      var ho = py2 * 8 - sy * 0.03;
+      x.fillStyle = "#0c0a06"; x.beginPath(); x.moveTo(0, H); x.lineTo(0, H * 0.72 + ho);
+      x.bezierCurveTo(W * 0.25, H * 0.66 + ho, W * 0.55, H * 0.78 + ho, W * 0.78, H * 0.7 + ho);
+      x.bezierCurveTo(W * 0.9, H * 0.66 + ho, W, H * 0.72 + ho, W, H * 0.71 + ho);
+      x.lineTo(W, H); x.closePath(); x.fill();
+
+      var tx = W * 0.12 + px * 4;
+      x.save(); x.translate(tx, H - sy * 0.04); x.fillStyle = "#080604";
+      x.beginPath(); x.moveTo(0, 0); x.lineTo(-6, -H * 0.28);
+      x.bezierCurveTo(-8, -H * 0.34, -30, -H * 0.36, -46, -H * 0.33);
+      x.bezierCurveTo(-20, -H * 0.36, -6, -H * 0.4, 0, -H * 0.44);
+      x.bezierCurveTo(6, -H * 0.4, 24, -H * 0.36, 52, -H * 0.34);
+      x.bezierCurveTo(30, -H * 0.36, 10, -H * 0.34, 8, -H * 0.28);
+      x.lineTo(6, 0); x.closePath(); x.fill();
+      x.beginPath(); x.ellipse(0, -H * 0.42, 78, 26, 0, 0, TAU); x.fill();
+      x.restore();
+
+      var gr = (small ? 260 : 420) * flick;
+      var glow = x.createRadialGradient(fx, fy - 30, 0, fx, fy - 30, gr);
+      glow.addColorStop(0, "rgba(255,236,188," + (0.5 * flick) + ")");
+      glow.addColorStop(0.3, "rgba(255,214,140," + (0.22 * flick) + ")");
+      glow.addColorStop(0.7, "rgba(210,150,70,.06)"); glow.addColorStop(1, "rgba(210,150,70,0)");
+      x.save(); x.globalCompositeOperation = "lighter"; x.fillStyle = glow;
+      x.beginPath(); x.arc(fx, fy - 30, gr, 0, TAU); x.fill(); x.restore();
+
+      var seatScale = small ? 0.5 : 0.82;
+      for (var s2 = 0; s2 < seats.length; s2++) {
+        var se = seats[s2];
+        var ang = Math.PI + se.tt * Math.PI;
+        var rw = W * se.spread * 0.5, rh = small ? 60 : 120;
+        var sxp = fx + Math.cos(ang) * rw + (se.tt - 0.5) * 40;
+        var syp = fy - 40 - Math.sin(ang) * rh - se.row * (small ? 16 : 30);
+        var dep = 1 - se.row / 3;
+        sxp += px * (10 + dep * 26); syp += py2 * (4 + dep * 8);
+        if (Math.abs(sxp - fx) < (small ? 44 : 78)) continue;
+        var front = se.row === (small ? 1 : 2);
+        figure(sxp, syp, seatScale * se.sc * (front ? 1.28 : 1), front);
+      }
+
+      x.fillStyle = "#241206"; x.save(); x.translate(fx, fy - 6);
+      x.beginPath(); x.moveTo(-52, 6); x.lineTo(48, 18); x.lineTo(44, 30); x.lineTo(-56, 18); x.closePath(); x.fill();
+      x.beginPath(); x.moveTo(-40, 22); x.lineTo(54, 6); x.lineTo(60, 18); x.lineTo(-34, 34); x.closePath(); x.fill();
+      x.restore();
+
+      x.save(); x.translate(fx, fy - 8); x.globalCompositeOperation = "lighter";
+      function flame(scale, hcol, seed) {
+        var wob = Math.sin(t * 9 + seed) * 4 + Math.sin(t * 21 + seed) * 2;
+        var hgt = (small ? 60 : 96) * scale * flick;
+        var g2 = x.createLinearGradient(0, 0, 0, -hgt);
+        g2.addColorStop(0, "rgba(255,180,90,0)");
+        g2.addColorStop(0.15, "rgba(255,196,110,.55)");
+        g2.addColorStop(0.6, hcol);
+        g2.addColorStop(1, "rgba(255,246,214,.95)");
+        x.fillStyle = g2; x.beginPath(); x.moveTo(-14 * scale, 4);
+        x.bezierCurveTo(-18 * scale, -hgt * 0.4, -6 * scale + wob, -hgt * 0.7, wob, -hgt);
+        x.bezierCurveTo(6 * scale + wob, -hgt * 0.7, 18 * scale, -hgt * 0.4, 14 * scale, 4);
+        x.closePath(); x.fill();
+      }
+      flame(1.15, "rgba(255,206,120,.7)", 0);
+      flame(0.8, "rgba(255,224,150,.85)", 2.4);
+      flame(0.45, "rgba(255,244,210,.95)", 5.1);
+      x.restore();
+
+      x.save(); x.globalCompositeOperation = "lighter";
+      for (var e2 = 0; e2 < embers.length; e2++) {
+        var em = embers[e2];
+        em.x += em.vx + Math.sin(t * 2 + e2) * 0.0002; em.y -= em.vy; em.life -= 0.004;
+        if (em.y < 0.12 || em.life <= 0) { embers[e2] = newEmber(false); continue; }
+        var exx = em.x * W, eyy = fy - 20 - (1 - em.y) * (small ? 200 : 420);
+        var ea = Math.max(0, em.life) * (0.5 + Math.sin(t * 10 + e2) * 0.3);
+        var eg = x.createRadialGradient(exx, eyy, 0, exx, eyy, em.r * 3);
+        eg.addColorStop(0, "rgba(255,236,180," + ea + ")"); eg.addColorStop(1, "rgba(255,236,180,0)");
+        x.fillStyle = eg; x.beginPath(); x.arc(exx, eyy, em.r * 3, 0, TAU); x.fill();
+      }
+      x.restore();
+
+      x.save(); x.globalCompositeOperation = "lighter";
+      x.fillStyle = "rgba(255,248,224," + (0.7 * flick) + ")";
+      x.beginPath(); x.arc(fx, fy - 16, (small ? 8 : 13) * flick, 0, TAU); x.fill(); x.restore();
+
+      x.fillStyle = "#040302"; x.beginPath(); x.moveTo(0, H); x.lineTo(0, H - 12);
+      x.bezierCurveTo(W * 0.3, H - 26, W * 0.7, H - 2, W, H - 18); x.lineTo(W, H); x.closePath(); x.fill();
+    }
+
+    spark = function () {
+      boost = 1;
+      for (var i = 0; i < 16; i++) embers.push(newEmber(false, true));
+      if (embers.length > 160) embers.splice(0, embers.length - 160);
+    };
+
+    resize();
+    addEventListener("resize", function () { clearTimeout(resize._t); resize._t = setTimeout(resize, 160); });
+    if (fine && !reduce) addEventListener("pointermove", function (e) { tmx = e.clientX / innerWidth; tmy = e.clientY / innerHeight; });
+    addEventListener("scroll", function () { sy = scrollY; }, { passive: true });
+
+    if (reduce) { draw(); return; }
+    var run = true;
+    (function loop() { if (run) draw(); requestAnimationFrame(loop); })();
+    if ("IntersectionObserver" in window) new IntersectionObserver(function (ents) { run = ents[0].isIntersecting; }, { rootMargin: "200px" }).observe(cv);
+  });
+
+  /* ---- poke the fire ---- */
+  safe(function () {
+    var hero = $("#hero"), out = $("#sparks"); if (!hero) return;
+    var key = "cto-sparks-" + new Date().toISOString().slice(0, 10);
+    var n = 0; try { n = parseInt(localStorage.getItem(key) || "0", 10) || 0; } catch (e) {}
+    if (out) out.textContent = n;
+    hero.addEventListener("pointerdown", function (e) {
+      if (e.target.closest("a,button,.hero__spec")) return;
+      if (spark) spark();
+      n++; if (out) out.textContent = n;
+      try { localStorage.setItem(key, n); } catch (er) {}
+    });
+  });
+
+  /* ---- easter egg: type "cto" ---- */
+  safe(function () {
+    var buf = "", sec = $("#ember-secret");
+    addEventListener("keydown", function (e) {
+      if (/^[a-z]$/i.test(e.key)) {
+        buf = (buf + e.key.toLowerCase()).slice(-3);
+        if (buf === "cto") {
+          if (spark) { spark(); setTimeout(spark, 120); setTimeout(spark, 260); }
+          if (sec) { sec.classList.add("show"); setTimeout(function () { sec.classList.remove("show"); }, 3200); }
+        }
+      }
+    });
+  });
+})();
+</script>
+</body>
+</html>
