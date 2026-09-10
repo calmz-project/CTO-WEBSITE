@@ -20,10 +20,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,400;1,9..144,600&family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
 
 <style>
-/* ==========================================================================
-   $CTO — THE POWER OF COMMUNITY
-   Butter · ink black · warm white. A fireside told at night.
-   ========================================================================== */
+
 :root{
   --paper:#efdfab; --paper-raise:#e8d59b;
   --night:#100d08; --night-raise:#171308;
@@ -81,8 +78,7 @@ body::after{
 .eyebrow::before{content:"";width:2.2em;height:1px;background:currentColor;flex:none}
 .lede{font-size:clamp(1rem,1.35vw,1.2rem);color:var(--on-dim);margin:0}
 
-/* Reveal is transform-only — never opacity. If a mobile webview freezes the
-   transition mid-flight the text is still fully readable, just offset a few px. */
+
 .mask{display:block}
 .mask > span{display:block}
 html.js .rv{transform:translateY(18px);transition:transform .7s cubic-bezier(.16,1,.3,1);transition-delay:var(--d,0s)}
@@ -110,7 +106,7 @@ html.js .mask.in > span{transform:none}
 .iconbtn:hover{transform:translateY(-3px)}
 .iconbtn svg{width:1.05em;height:1.05em;fill:currentColor}
 
-/* ============================ NAV ============================ */
+
 .nav{position:fixed;inset:0 0 auto 0;z-index:50;display:flex;align-items:center;gap:1.4rem;
   padding:1.25rem clamp(1rem,4vw,2.4rem);color:var(--cream);
   transition:padding .4s ease,background .4s ease,color .4s ease,border-color .4s ease;border-bottom:1px solid transparent}
@@ -128,7 +124,7 @@ html.js .mask.in > span{transform:none}
 .chip{appearance:none;-webkit-appearance:none;font:inherit;font-size:.74rem;font-weight:600;letter-spacing:.03em;padding:.5em .9em;border:1px solid currentColor;border-radius:2px;cursor:pointer;color:inherit;background:transparent;transition:transform .35s cubic-bezier(.2,1,.3,1),background .3s}
 .chip:hover{transform:translateY(-2px)}
 
-/* mobile menu */
+
 .nav__burger{appearance:none;-webkit-appearance:none;display:none;width:34px;height:34px;padding:0;
   border:1px solid currentColor;border-radius:2px;background:transparent;color:inherit;cursor:pointer;
   flex-direction:column;align-items:center;justify-content:center;gap:5px}
@@ -152,7 +148,7 @@ html.menu-open .nav{background:transparent;color:var(--cream);border-color:trans
 .navmenu__ca:hover{color:var(--cream)}
 @media (min-width:821px){.navmenu{display:none}}
 
-/* ============================ HERO ============================ */
+
 .hero{position:relative;min-height:100svh;display:flex;flex-direction:column;justify-content:flex-end;
   padding:8rem clamp(1rem,4vw,2.4rem) 3rem;overflow:hidden;background:var(--night);color:var(--cream);isolation:isolate}
 .hero__canvas,.hero__fallback{position:absolute;inset:0;width:100%;height:100%}
@@ -189,13 +185,12 @@ html.menu-open .nav{background:transparent;color:var(--cream);border-color:trans
 .hero__spec .ca{cursor:pointer}
 .hero__spec .ca:hover{text-decoration:underline;text-underline-offset:3px}
 @media (max-width:900px){
-  /* on phones the hero content is tall — flow it from below the nav instead
-     of cramming it into one screen (which pushed it up under the header) */
+
   .hero{min-height:auto;justify-content:flex-start;padding:6.5rem clamp(1rem,4vw,2.4rem) 3rem}
   .hero__grid{grid-template-columns:1fr}
   .hero__spec{min-width:0;width:100%}
   .scrolldot{display:none}
-  /* contract: label on its own line, full address on one unbroken line below */
+
   .hero__spec div:last-child{flex-direction:column;align-items:flex-start;gap:.4rem}
   .hero__spec .ca{width:100%;text-align:left;word-break:normal;white-space:nowrap;
     overflow-x:auto;-webkit-overflow-scrolling:touch;font-size:clamp(.6rem,3vw,.76rem);
@@ -208,7 +203,7 @@ html.menu-open .nav{background:transparent;color:var(--cream);border-color:trans
   color:rgba(var(--fire),.9);font-size:1.1rem;opacity:0;transition:opacity .8s ease}
 #ember-secret.show{opacity:1}
 
-/* ============================ LIVE BAND ============================ */
+
 .live{background:var(--night);color:var(--cream);border-block:1px solid rgba(251,244,224,.12);padding:clamp(2.5rem,6vh,4rem) 0}
 .live__head{display:flex;flex-wrap:wrap;align-items:baseline;gap:.8rem 1.4rem;margin-bottom:1.8rem}
 .live__dot{width:8px;height:8px;border-radius:50%;background:#7bd88f;box-shadow:0 0 10px #7bd88f;flex:none;align-self:center}
@@ -230,7 +225,7 @@ html.menu-open .nav{background:transparent;color:var(--cream);border-color:trans
 @media (max-width:1000px){.live__grid{grid-template-columns:repeat(3,1fr)}}
 @media (max-width:560px){.live__grid{grid-template-columns:1fr 1fr}}
 
-/* ============================ MARQUEE ============================ */
+
 .marq{background:var(--on);color:var(--surface);overflow:hidden;padding:.7rem 0;border-block:1px solid var(--on)}
 .marq__row{display:flex;white-space:nowrap;width:max-content;animation:mq 40s linear infinite}
 .marq:hover .marq__row{animation-play-state:paused}
@@ -238,10 +233,9 @@ html.menu-open .nav{background:transparent;color:var(--cream);border-color:trans
 .marq__row span::after{content:"\2217";opacity:.5}
 @keyframes mq{to{transform:translateX(-50%)}}
 
-/* ============================ BANDS ============================ */
+
 .band{padding:clamp(3rem,6vh,4.75rem) 0;border-top:1px solid var(--line)}
-/* A night band forces the dark palette regardless of the page theme, so
-   every component inside it (cards, borders, dim text) resolves correctly. */
+
 .band--night{
   background:var(--night);color:var(--cream);border-color:rgba(251,244,224,.12);
   --on:var(--cream);
@@ -268,7 +262,7 @@ html.menu-open .nav{background:transparent;color:var(--cream);border-color:trans
 @media (max-width:820px){.cards{grid-template-columns:1fr 1fr}}
 @media (max-width:520px){.cards{grid-template-columns:1fr}}
 
-/* ============================ TOKENOMICS ============================ */
+
 .alloc{margin-top:2.4rem;border:1px solid var(--on);height:64px;display:flex;overflow:hidden}
 .alloc span{display:flex;align-items:center;justify-content:center;background:var(--on);color:var(--surface);
   font-family:"Fraunces",serif;font-weight:600;font-size:1rem;letter-spacing:.02em}
@@ -294,7 +288,7 @@ html.menu-open .nav{background:transparent;color:var(--cream);border-color:trans
   .tokrows dd{text-align:left;white-space:nowrap;overflow-x:auto;font-size:clamp(.62rem,3vw,.86rem)}
 }
 
-/* ============================ MEME FORGE ============================ */
+
 .forge{display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:2rem 2.6rem;align-items:start;margin-top:2.4rem}
 .forge__stage{border:1px solid rgba(251,244,224,.16);background:#0b0906;padding:.8rem}
 .forge__stage canvas{width:100%;display:block;aspect-ratio:1200/675}
@@ -309,7 +303,7 @@ html.menu-open .nav{background:transparent;color:var(--cream);border-color:trans
 .forge__hint{margin-top:1rem;font-size:.74rem;color:rgba(251,244,224,.4);line-height:1.6}
 @media (max-width:820px){.forge{grid-template-columns:1fr}}
 
-/* ============================ CLOSE + FOOT ============================ */
+
 .close{text-align:center;padding:clamp(4rem,9vh,7rem) 0}
 .close .row{display:flex;gap:.65rem;justify-content:center;flex-wrap:wrap;margin-top:2rem;color:var(--cream)}
 .foot{background:var(--night);color:var(--cream);padding:3rem 0 3.5rem;border-top:1px solid rgba(251,244,224,.12)}
@@ -336,8 +330,7 @@ html.menu-open .nav{background:transparent;color:var(--cream);border-color:trans
 </head>
 <body>
 <script>
-/* Theme before first paint: an unexpired manual choice wins (8h), otherwise
-   pick by the visitor's local time — light in the day, dark at night. */
+
 (function () {
   var t = null;
   try {
@@ -351,7 +344,7 @@ html.menu-open .nav{background:transparent;color:var(--cream);border-color:trans
 
 <div class="firelight" id="firelight" aria-hidden="true"></div>
 
-<!-- ============================ NAV ============================ -->
+
 <header class="nav" id="nav">
   <a class="nav__brand" href="#top" aria-label="CTO"><img src="assets/img/logo.png" alt="" /><span>$CTO</span></a>
   <nav class="nav__links" aria-label="Primary">
@@ -383,7 +376,7 @@ html.menu-open .nav{background:transparent;color:var(--cream);border-color:trans
 
 <main id="top">
 
-  <!-- ============================ HERO ============================ -->
+
   <section class="hero" id="hero">
     <div class="hero__fallback" aria-hidden="true"></div>
     <canvas class="hero__canvas" id="scene" aria-hidden="true"></canvas>
@@ -428,7 +421,7 @@ html.menu-open .nav{background:transparent;color:var(--cream);border-color:trans
     <div class="scrolldot" aria-hidden="true"></div>
   </section>
 
-  <!-- ============================ LIVE / ON-CHAIN ============================ -->
+
   <section class="live off" id="fire">
     <div class="wrap">
       <div class="live__head">
@@ -454,7 +447,7 @@ html.menu-open .nav{background:transparent;color:var(--cream);border-color:trans
     </div>
   </section>
 
-  <!-- ============================ MARQUEE ============================ -->
+
   <div class="marq" aria-hidden="true">
     <div class="marq__row" id="marqRow">
       <span>take it over</span><span>keys with nobody</span><span>one billion, three and three</span><span>decisions in the open</span><span>still here</span><span>the circle holds</span>
@@ -462,7 +455,7 @@ html.menu-open .nav{background:transparent;color:var(--cream);border-color:trans
     </div>
   </div>
 
-  <!-- ============================ 01 · THE STORY ============================ -->
+
   <section class="band" id="story">
     <div class="wrap">
       <div class="head">
@@ -489,7 +482,7 @@ html.menu-open .nav{background:transparent;color:var(--cream);border-color:trans
     </div>
   </section>
 
-  <!-- ============================ 02 · HOW IT WORKS ============================ -->
+
   <section class="band band--night" id="how">
     <div class="wrap">
       <div class="head">
@@ -505,7 +498,7 @@ html.menu-open .nav{background:transparent;color:var(--cream);border-color:trans
     </div>
   </section>
 
-  <!-- ============================ 03 · TOKENOMICS ============================ -->
+
   <section class="band" id="tokenomics">
     <div class="wrap">
       <div class="head">
@@ -535,7 +528,7 @@ html.menu-open .nav{background:transparent;color:var(--cream);border-color:trans
     </div>
   </section>
 
-  <!-- ============================ 04 · MEME FORGE ============================ -->
+
   <section class="band band--night" id="forge">
     <div class="wrap">
       <div class="head">
@@ -553,14 +546,14 @@ html.menu-open .nav{background:transparent;color:var(--cream);border-color:trans
             <button class="btn btn--solid" id="forgeSave" type="button">Save card <span class="a">↓</span></button>
             <button class="btn" id="forgeCopy" type="button" style="color:var(--cream)">Copy image</button>
           </div>
-          <div class="forge__seed" id="forgeSeed"><!-- filled per visitor by JS --></div>
+          <div class="forge__seed" id="forgeSeed"></div>
           <p class="forge__hint">Sized for X (1200&times;675). Save it, copy it, or right-click to grab it.</p>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ============================ 04 · THE CIRCLE ============================ -->
+
   <section class="band band--night close" id="circle">
     <div class="wrap">
       <p class="eyebrow rv" style="justify-content:center">05 &middot; The Circle</p>
@@ -595,11 +588,7 @@ html.menu-open .nav{background:transparent;color:var(--cream);border-color:trans
 <div class="toast" id="toast">Copied</div>
 
 <script>
-/* ==========================================================================
-   $CTO — no libraries.  Edit CONFIG for content.
-   Live figures come from the DexScreener public API on your own domain;
-   in restricted previews they just stay as "—". Page reads fine with no JS.
-   ========================================================================== */
+
 var CONFIG = {
   contract : "0x41b68a48446522de90d5dc590a595a2aceb42b66",
   telegram : "https://t.me/COMMUNITY1455",
@@ -607,21 +596,18 @@ var CONFIG = {
   buyUrl   : "https://pancakeswap.finance/swap?outputCurrency=0x41b68a48446522de90d5dc590a595a2aceb42b66&chain=bsc",
   chartUrl : "https://listpad.xyz/coins/community-take-over",
   lockUrl  : "https://www.pinksale.finance/pinklock/bsc/record/1695599",
-  lockLabel: "12 months",        /* liquidity-lock duration shown across the site */
+  lockLabel: "12 months",
   supply   : "1,000,000,000",
   tax      : "3 / 3",
-  maxWallet: "3%",               /* 3% of supply per wallet, set by the community */
-  peakFloorMc: 7000,             /* known all-time-high in USD; the live figure ratchets up from here on its own */
-  startMc  : 100,                /* the hundred dollars the multiple is measured from */
-  launchTs : 1786305647000,      /* pool-creation time; "days lit" ticks from this even offline */
+  maxWallet: "3%",
+  peakFloorMc: 7000,
+  startMc  : 100,
+  launchTs : 1786305647000,
 
-  /* Shown instantly on load and kept if the live API can't be reached
-     (e.g. inside a sandboxed preview). Refresh these now and then so the
-     fallback stays believable; the published site overwrites them live. */
+
   seed     : { priceUsd: "0.0001509", marketCap: 1509, liquidityUsd: 904, volume24: 205, buys24: 15, sells24: 16 },
 
-  /* Meme Forge starter lines. Each visitor gets a different slice of these,
-     rotating on every visit — add your own freely. */
+
   lines: [
     "a hundred dollars and a show of hands",
     "the founder is the group",
@@ -654,7 +640,7 @@ var CONFIG = {
   var safe = function (fn) { try { fn(); } catch (e) { if (window.console) console.warn("[CTO]", e); } };
   var set = function (sel, txt) { var e = $(sel); if (e) e.textContent = txt; };
 
-  /* ---- content ---- */
+
   safe(function () {
     var c = CONFIG;
     set("#caShort", c.contract.slice(0, 6) + "…" + c.contract.slice(-4));
@@ -669,8 +655,7 @@ var CONFIG = {
     set("#yr", new Date().getFullYear());
   });
 
-  /* ---- theme: auto by local time; a tapped toggle overrides for 8 hours,
-          then the clock takes back over ---- */
+
   safe(function () {
     var KEY = "cto-theme";
     var byClock = function () { var h = new Date().getHours(); return (h >= 19 || h < 7) ? "dark" : "light"; };
@@ -695,14 +680,14 @@ var CONFIG = {
       var next = cur === "dark" ? "light" : "dark";
       root.setAttribute("data-theme", next);
       try {
-        if (next === byClock()) localStorage.removeItem(KEY);          /* back in step with the clock: resume auto */
+        if (next === byClock()) localStorage.removeItem(KEY);
         else localStorage.setItem(KEY, JSON.stringify({ t: next, ts: Date.now() }));
       } catch (e) {}
       safe(renderForge);
     });
   });
 
-  /* ---- toast + copy ---- */
+
   var toast = function (msg) {
     var t = $("#toast"); if (!t) return;
     t.textContent = msg || "Copied"; t.classList.add("show");
@@ -716,14 +701,14 @@ var CONFIG = {
     ["#chipCa", "#footCa", "#specCa", "#tokCa"].forEach(function (s) { var e = $(s); if (e) e.addEventListener("click", copy); });
   });
 
-  /* ---- nav tuck ---- */
+
   safe(function () {
     var n = $("#nav");
     var f = function () { n.classList.toggle("tuck", scrollY > innerHeight * 0.82); };
     f(); addEventListener("scroll", f, { passive: true });
   });
 
-  /* ---- mobile menu ---- */
+
   safe(function () {
     var b = $("#burger"), m = $("#navmenu"); if (!b || !m) return;
     var set = function (open) {
@@ -743,12 +728,12 @@ var CONFIG = {
     });
   });
 
-  /* ---- reveals ---- */
+
   root.classList.add("js");
   safe(function () {
     var items = $$(".rv, .mask");
     var showAll = function () { items.forEach(function (e) { e.classList.add("in"); }); };
-    /* safety net only — a stalled transform-only reveal is still fully readable */
+
     var timer = setTimeout(showAll, 4000);
     if (!("IntersectionObserver" in window)) { clearTimeout(timer); showAll(); return; }
     var io = new IntersectionObserver(function (ents) {
@@ -772,7 +757,7 @@ var CONFIG = {
     });
   });
 
-  /* ---- cursor firelight ---- */
+
   if (fine && !reduce) safe(function () {
     var fl = $("#firelight"); if (!fl) return;
     var x = innerWidth / 2, y = innerHeight * 0.4, tx = x, ty = y;
@@ -784,9 +769,7 @@ var CONFIG = {
     })();
   });
 
-  /* ==========================================================================
-     LIVE ON-CHAIN FIGURES — DexScreener public API
-     ========================================================================== */
+
   safe(function () {
     var band = $("#fire"); if (!band) return;
     function money(n) {
@@ -822,7 +805,7 @@ var CONFIG = {
       set("#stDays", days());
       set("#stMult", mult(mc));
 
-      /* all-time high: a high-water mark that climbs on its own, never edited */
+
       var ath = 0; try { ath = parseFloat(localStorage.getItem("cto-ath")) || 0; } catch (e) {}
       ath = Math.max(ath, mc, CONFIG.peakFloorMc || 0);
       if (live && mc > 0) { try { localStorage.setItem("cto-ath", ath); } catch (e) {} }
@@ -835,7 +818,7 @@ var CONFIG = {
         : 'Sample figures. <a href="' + CONFIG.chartUrl + '" target="_blank" rel="noopener">Open the chart ↗</a>';
     }
 
-    /* show believable numbers straightaway, then try to go live */
+
     if (CONFIG.seed) paint(CONFIG.seed, false);
 
     function load() {
@@ -853,15 +836,13 @@ var CONFIG = {
             buys24: tx.buys || 0, sells24: tx.sells || 0
           }, true);
         })
-        .catch(function () { band.classList.add("off"); /* keep the seed figures + sample note on screen */ });
+        .catch(function () { band.classList.add("off");  });
     }
     load();
     setInterval(load, 30000);
   });
 
-  /* ==========================================================================
-     MEME FORGE
-     ========================================================================== */
+
   function renderForge() {}
   safe(function () {
     var cv = $("#forgeCanvas"); if (!cv || !cv.getContext) return;
@@ -887,22 +868,22 @@ var CONFIG = {
       g.addColorStop(0, "#241d10"); g.addColorStop(0.45, "#181307"); g.addColorStop(1, "#0c0a06");
       x.fillStyle = g; x.fillRect(0, 0, W, H);
 
-      /* ripples radiating from the centre — like sound from a spoken word */
+
       x.strokeStyle = "rgba(255,233,176,.10)"; x.lineWidth = 2;
       for (var k = 1; k <= 6; k++) { x.beginPath(); x.arc(W / 2, H / 2, k * 115, 0, TAU); x.stroke(); }
 
-      /* border */
+
       x.strokeStyle = "rgba(255,244,224,.18)"; x.lineWidth = 2; x.strokeRect(30, 30, W - 60, H - 60);
 
       x.textAlign = "center";
       x.textBaseline = "alphabetic";
 
-      /* eyebrow — centred, top */
+
       x.fillStyle = "rgba(255,244,224,.5)";
       x.font = "600 22px 'Hanken Grotesk', sans-serif";
       x.fillText("$ C T O   ·   T H E   P O W E R   O F   C O M M U N I T Y", W / 2, 100);
 
-      /* the line — centred on both axes, every wrapped line centred under the last */
+
       var line = (ta && ta.value || "").trim();
       var size = line.length > 95 ? 50 : line.length > 58 ? 62 : 76;
       var font = "600 " + size + "px 'Fraunces', Georgia, serif";
@@ -912,7 +893,7 @@ var CONFIG = {
       var startY = H / 2 - (lines.length * lh) / 2 + size * 0.66;
       for (var i = 0; i < lines.length; i++) x.fillText(lines[i], W / 2, startY + i * lh);
 
-      /* footer — centred group: logo + wordmark, tagline under it */
+
       var footY = H - 96;
       x.font = "700 30px 'Fraunces', serif";
       var ctoW = x.measureText("$CTO").width, logoS = 52, gap = 14;
@@ -931,12 +912,11 @@ var CONFIG = {
     }
     renderForge = render;
 
-    /* rotate the starter lines: a different slice of the pool for every
-       visitor and every reload */
+
     (function rotate() {
       var pool = (CONFIG.lines || []).slice();
       if (pool.length < 5) return;
-      for (var s = pool.length - 1; s > 0; s--) {   /* shuffle */
+      for (var s = pool.length - 1; s > 0; s--) {
         var j = Math.floor(Math.random() * (s + 1)), t = pool[s]; pool[s] = pool[j]; pool[j] = t;
       }
       ta.value = pool[0];
@@ -978,10 +958,7 @@ var CONFIG = {
     });
   });
 
-  /* ==========================================================================
-     THE FIRE — canvas night scene. Own rAF loop. CSS fallback if this dies.
-     Exposes spark() so the hero can be poked.
-     ========================================================================== */
+
   var spark = null;
   safe(function () {
     var cv = $("#scene"); if (!cv || !cv.getContext) return;
@@ -1158,7 +1135,7 @@ var CONFIG = {
     if ("IntersectionObserver" in window) new IntersectionObserver(function (ents) { run = ents[0].isIntersecting; }, { rootMargin: "200px" }).observe(cv);
   });
 
-  /* ---- poke the fire ---- */
+
   safe(function () {
     var hero = $("#hero"), out = $("#sparks"), hint = $("#sparkHint"); if (!hero) return;
     var key = "cto-sparks-" + new Date().toISOString().slice(0, 10);
@@ -1176,7 +1153,7 @@ var CONFIG = {
     if (hint) hint.addEventListener("click", poke);
   });
 
-  /* ---- easter egg: type "cto" ---- */
+
   safe(function () {
     var buf = "", sec = $("#ember-secret");
     addEventListener("keydown", function (e) {

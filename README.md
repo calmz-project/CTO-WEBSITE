@@ -24,13 +24,14 @@ Open **`index.html`** and find the `CONFIG` object near the bottom (inside
 
 | Field | What it does |
 |---|---|
-| `contract`, `telegram`, `twitter`, `buyUrl`, `chartUrl` | Links used across the page + the copy-CA button. |
-| `supply`, `tax`, `maxWallet` | The spec panel in the hero. Currently `1,000,000,000`, `3 / 3`, `3%`. |
-| `peakLabel` | The only place the ATH figure lives (e.g. `"about $7K"`). Bump it when it's beaten. |
-| `startMc` | The market cap the live "multiple" is measured from (`100`). |
+| `contract`, `telegram`, `twitter`, `buyUrl`, `chartUrl`, `lockUrl` | Links used across the page. `lockUrl` is the PinkSale liquidity-lock record. |
+| `lockLabel` | Lock duration text (currently `"12 months"`). |
+| `supply`, `tax`, `maxWallet` | The hero spec panel + tokenomics section. Currently `1,000,000,000`, `3 / 3`, `3%`. |
+| `peakFloorMc` | Known all-time-high market cap in USD (`7000`). The displayed ATH ratchets up from here on its own — no editing once the price beats it. |
+| `startMc` | Market cap the live "N&times;" multiple is measured from (`100`). |
 | `launchTs` | Pool-creation time in ms — powers "days lit". |
-| `seed` | Fallback figures shown before the live API responds. Refresh occasionally. |
-| `lines` | Meme Forge starter lines. A different set rotates in for each visitor — add your own freely. |
+| `seed` | Fallback on-chain figures shown before the live API responds, or if it's unreachable. Refresh occasionally so it stays believable. |
+| `lines` | Meme Forge starter lines. A shuffled slice shows for each visitor — add your own freely. |
 
 Headlines and body copy are plain HTML — edit them directly in `index.html`.
 
