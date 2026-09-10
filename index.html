@@ -335,6 +335,18 @@ html.menu-open .nav{background:transparent;color:var(--cream);border-color:trans
 </style>
 </head>
 <body>
+<script>
+/* Set the theme before the page paints: a saved manual choice wins, otherwise
+   pick by the visitor's local time — light in the day, dark at night. */
+(function () {
+  try {
+    var k = localStorage.getItem("cto-theme");
+    if (k === "dark" || k === "light") { document.documentElement.setAttribute("data-theme", k); return; }
+  } catch (e) {}
+  var h = new Date().getHours();
+  document.documentElement.setAttribute("data-theme", (h >= 19 || h < 7) ? "dark" : "light");
+})();
+</script>
 
 <div class="firelight" id="firelight" aria-hidden="true"></div>
 
@@ -657,15 +669,27 @@ var CONFIG = {
     set("#yr", new Date().getFullYear());
   });
 
-  /* ---- theme ---- */
+  /* ---- theme: auto by local time (light in the day, dark at night),
+          overridden the moment someone taps the toggle ---- */
   safe(function () {
     var KEY = "cto-theme", saved = null;
     try { saved = localStorage.getItem(KEY); } catch (e) {}
-    if (saved) root.setAttribute("data-theme", saved);
+    var manual = (saved === "dark" || saved === "light");
+    var byClock = function () { var h = new Date().getHours(); return (h >= 19 || h < 7) ? "dark" : "light"; };
+
+    var applyAuto = function () {
+      if (manual) return;
+      var want = byClock();
+      if (root.getAttribute("data-theme") !== want) { root.setAttribute("data-theme", want); safe(renderForge); }
+    };
+    root.setAttribute("data-theme", manual ? saved : byClock());
+    setInterval(applyAuto, 5 * 60 * 1000);   /* re-check as the day turns over */
+
     var b = $("#tog"); if (!b) return;
     b.addEventListener("click", function () {
-      var cur = root.getAttribute("data-theme") || (matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+      var cur = root.getAttribute("data-theme") || byClock();
       var next = cur === "dark" ? "light" : "dark";
+      manual = true; saved = next;
       root.setAttribute("data-theme", next);
       try { localStorage.setItem(KEY, next); } catch (e) {}
       safe(renderForge);
