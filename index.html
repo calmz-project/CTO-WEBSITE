@@ -297,6 +297,13 @@ html.menu-open .nav{background:transparent;color:var(--cream);border-color:trans
   color:var(--cream);font-family:"Fraunces",serif;font-size:1.05rem;line-height:1.35;padding:.9rem 1rem;border-radius:2px}
 .forge__panel textarea:focus{outline:1px solid rgba(var(--fire),.5)}
 .forge__row{display:flex;gap:.6rem;flex-wrap:wrap;margin-top:.9rem}
+.forge__cap{display:block;font-size:.7rem;letter-spacing:.16em;text-transform:uppercase;color:rgba(251,244,224,.45);margin-bottom:.5rem}
+.forge__styles{display:flex;gap:.4rem;margin-bottom:1.2rem}
+.forge__styles button{appearance:none;-webkit-appearance:none;font:inherit;font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;
+  color:rgba(251,244,224,.55);border:1px solid rgba(251,244,224,.18);background:transparent;padding:.55em .9em;border-radius:2px;cursor:pointer;
+  transition:color .25s,border-color .25s,background .25s}
+.forge__styles button:hover{color:var(--cream);border-color:rgba(251,244,224,.45)}
+.forge__styles button.on{color:var(--night);background:var(--cream);border-color:var(--cream)}
 .forge__seed{display:flex;gap:.4rem;flex-wrap:wrap;margin-top:1rem}
 .forge__seed button{appearance:none;-webkit-appearance:none;font:inherit;font-size:.72rem;color:rgba(251,244,224,.6);border:1px solid rgba(251,244,224,.16);background:transparent;padding:.4em .7em;border-radius:2px;cursor:pointer;transition:color .25s,border-color .25s}
 .forge__seed button:hover{color:var(--cream);border-color:rgba(251,244,224,.45)}
@@ -540,6 +547,12 @@ html.menu-open .nav{background:transparent;color:var(--cream);border-color:trans
           <canvas id="forgeCanvas" width="1200" height="675"></canvas>
         </div>
         <div class="forge__panel rv">
+          <span class="forge__cap">Style</span>
+          <div class="forge__styles" id="forgeStyles">
+            <button type="button" data-s="fireside" class="on">Fireside</button>
+            <button type="button" data-s="paper">Paper</button>
+            <button type="button" data-s="bold">Bold</button>
+          </div>
           <label for="forgeText">Your line</label>
           <textarea id="forgeText" maxlength="140" spellcheck="false">a hundred dollars and a show of hands</textarea>
           <div class="forge__row">
@@ -547,7 +560,7 @@ html.menu-open .nav{background:transparent;color:var(--cream);border-color:trans
             <button class="btn" id="forgeCopy" type="button" style="color:var(--cream)">Copy image</button>
           </div>
           <div class="forge__seed" id="forgeSeed"></div>
-          <p class="forge__hint">Sized for X (1200&times;675). Save it, copy it, or right-click to grab it.</p>
+          <p class="forge__hint">Sized for X (1200&times;675). Pick a style, write your line, then save or copy.</p>
         </div>
       </div>
     </div>
@@ -863,54 +876,83 @@ var CONFIG = {
       if (cur) lines.push(cur);
       return lines.slice(0, 6);
     }
-    function render() {
-      var g = x.createRadialGradient(W * 0.5, H * 0.5, 40, W * 0.5, H * 0.5, H * 1.05);
+    var STYLE = "fireside";
+
+    function quote(line, color, maxW, cy) {
+      var len = line.length;
+      var size = len > 95 ? 50 : len > 58 ? 62 : 76;
+      var font = "600 " + size + "px 'Fraunces', Georgia, serif";
+      var lines = wrap(line, font, maxW);
+      x.font = font; x.fillStyle = color; x.textAlign = "center";
+      var lh = size * 1.24, startY = cy - (lines.length * lh) / 2 + size * 0.66;
+      for (var i = 0; i < lines.length; i++) x.fillText(lines[i], W / 2, startY + i * lh);
+    }
+    function mark(y, wordColor, tagColor, tag) {
+      x.font = "700 30px 'Fraunces', serif";
+      var ctoW = x.measureText("$CTO").width, s = 52, gap = 14;
+      var groupW = (logoOK ? s + gap : 0) + ctoW, gx = W / 2 - groupW / 2;
+      if (logoOK) x.drawImage(logo, gx, y - s + 8, s, s);
+      x.textAlign = "left"; x.fillStyle = wordColor;
+      x.fillText("$CTO", gx + (logoOK ? s + gap : 0), y);
+      if (tag) {
+        x.textAlign = "center"; x.fillStyle = tagColor;
+        x.font = "500 19px 'Hanken Grotesk', sans-serif";
+        x.fillText("community-take-over on BNB Chain", W / 2, y + 30);
+      }
+    }
+
+    function drawFireside(line) {
+      var g = x.createRadialGradient(W / 2, H / 2, 40, W / 2, H / 2, H * 1.05);
       g.addColorStop(0, "#241d10"); g.addColorStop(0.45, "#181307"); g.addColorStop(1, "#0c0a06");
       x.fillStyle = g; x.fillRect(0, 0, W, H);
-
-
       x.strokeStyle = "rgba(255,233,176,.10)"; x.lineWidth = 2;
       for (var k = 1; k <= 6; k++) { x.beginPath(); x.arc(W / 2, H / 2, k * 115, 0, TAU); x.stroke(); }
-
-
-      x.strokeStyle = "rgba(255,244,224,.18)"; x.lineWidth = 2; x.strokeRect(30, 30, W - 60, H - 60);
-
-      x.textAlign = "center";
-      x.textBaseline = "alphabetic";
-
-
-      x.fillStyle = "rgba(255,244,224,.5)";
+      x.strokeStyle = "rgba(255,244,224,.18)"; x.strokeRect(30, 30, W - 60, H - 60);
+      x.textAlign = "center"; x.fillStyle = "rgba(255,244,224,.5)";
       x.font = "600 22px 'Hanken Grotesk', sans-serif";
       x.fillText("$ C T O   ·   T H E   P O W E R   O F   C O M M U N I T Y", W / 2, 100);
+      quote(line, "#fdf6e4", W - 260, H / 2);
+      mark(H - 96, "rgba(255,244,224,.85)", "rgba(255,244,224,.4)", true);
+    }
+    function drawPaper(line) {
+      x.fillStyle = "#f1e3bb"; x.fillRect(0, 0, W, H);
+      x.strokeStyle = "rgba(21,17,10,.35)"; x.lineWidth = 2; x.strokeRect(30, 30, W - 60, H - 60);
+      x.textAlign = "center"; x.fillStyle = "rgba(21,17,10,.5)";
+      x.font = "600 22px 'Hanken Grotesk', sans-serif";
+      x.fillText("$ C T O   ·   T H E   P O W E R   O F   C O M M U N I T Y", W / 2, 100);
+      quote(line, "#171310", W - 260, H * 0.46);
+      x.strokeStyle = "rgba(21,17,10,.22)"; x.beginPath(); x.moveTo(96, H - 150); x.lineTo(W - 96, H - 150); x.stroke();
+      mark(H - 92, "#171310", "rgba(21,17,10,.55)", true);
+    }
+    function drawBold(line) {
+      x.fillStyle = "#0c0a06"; x.fillRect(0, 0, W, H);
+      x.fillStyle = "#f1e3bb"; x.fillRect(0, 0, W, 108);
+      x.fillStyle = "#0c0a06"; x.textAlign = "left"; x.font = "700 46px 'Fraunces', serif";
+      x.fillText("$CTO", 56, 72);
+      x.textAlign = "right"; x.font = "600 17px 'Hanken Grotesk', sans-serif";
+      x.fillText("C O M M U N I T Y   T A K E   O V E R", W - 56, 66);
+      quote(line, "#fdf6e4", W - 200, H / 2 + 12);
+      x.fillStyle = "#f1e3bb"; x.fillRect(0, H - 66, W, 66);
+      x.fillStyle = "#0c0a06"; x.textAlign = "center"; x.font = "600 20px 'Hanken Grotesk', sans-serif";
+      x.fillText("ctobnb.website", W / 2, H - 40);
+    }
 
-
-      var line = (ta && ta.value || "").trim();
-      var size = line.length > 95 ? 50 : line.length > 58 ? 62 : 76;
-      var font = "600 " + size + "px 'Fraunces', Georgia, serif";
-      var lines = wrap(line, font, W - 260);
-      x.font = font; x.fillStyle = "#fdf6e4";
-      var lh = size * 1.24;
-      var startY = H / 2 - (lines.length * lh) / 2 + size * 0.66;
-      for (var i = 0; i < lines.length; i++) x.fillText(lines[i], W / 2, startY + i * lh);
-
-
-      var footY = H - 96;
-      x.font = "700 30px 'Fraunces', serif";
-      var ctoW = x.measureText("$CTO").width, logoS = 52, gap = 14;
-      var groupW = (logoOK ? logoS + gap : 0) + ctoW;
-      var gx = W / 2 - groupW / 2;
-      if (logoOK) x.drawImage(logo, gx, footY - logoS + 8, logoS, logoS);
-      x.textAlign = "left";
-      x.fillStyle = "rgba(255,244,224,.85)";
-      x.fillText("$CTO", gx + (logoOK ? logoS + gap : 0), footY);
-      x.textAlign = "center";
-      x.fillStyle = "rgba(255,244,224,.4)";
-      x.font = "500 19px 'Hanken Grotesk', sans-serif";
-      x.fillText("community-take-over on BNB Chain", W / 2, footY + 30);
-
+    function render() {
+      x.clearRect(0, 0, W, H);
+      x.textBaseline = "alphabetic";
+      var line = (ta && ta.value || "").trim() || "…";
+      ({ fireside: drawFireside, paper: drawPaper, bold: drawBold }[STYLE] || drawFireside)(line);
       x.textAlign = "left";
     }
     renderForge = render;
+
+    $$("#forgeStyles button").forEach(function (b) {
+      b.addEventListener("click", function () {
+        STYLE = b.getAttribute("data-s");
+        $$("#forgeStyles button").forEach(function (o) { o.classList.toggle("on", o === b); });
+        render();
+      });
+    });
 
 
     (function rotate() {
@@ -932,7 +974,7 @@ var CONFIG = {
     })();
 
     if (d.fonts && d.fonts.load) {
-      Promise.all([d.fonts.load("600 78px 'Fraunces'"), d.fonts.load("600 22px 'Hanken Grotesk'")]).then(render, render);
+      Promise.all([d.fonts.load("600 78px 'Fraunces'"), d.fonts.load("700 46px 'Fraunces'"), d.fonts.load("600 22px 'Hanken Grotesk'")]).then(render, render);
     }
     render();
     ta.addEventListener("input", render);
