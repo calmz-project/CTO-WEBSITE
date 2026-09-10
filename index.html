@@ -133,17 +133,17 @@ html.menu-open .nav__burger span:first-child{transform:translateY(3.25px) rotate
 html.menu-open .nav__burger span:last-child{transform:translateY(-3.25px) rotate(-45deg)}
 html.menu-open{overflow:hidden}
 html.menu-open .nav{background:transparent;color:var(--cream);border-color:transparent}
-html.menu-open .nav__burger{visibility:hidden}
+html.menu-open .nav__burger{display:none}
 
 .navmenu{position:fixed;inset:0;z-index:62;display:flex;flex-direction:column;justify-content:center;
   padding:6rem clamp(1.4rem,7vw,3rem) 3rem;background:var(--night);color:var(--cream);
   opacity:0;visibility:hidden;transform:translateY(-1.2rem);
   transition:opacity .4s ease,transform .5s cubic-bezier(.2,1,.3,1),visibility .4s}
 .navmenu.open{opacity:1;visibility:visible;transform:none}
-.navmenu__x{appearance:none;-webkit-appearance:none;position:absolute;top:1rem;right:clamp(1rem,4vw,2.4rem);
-  width:44px;height:44px;border:1px solid rgba(251,244,224,.35);border-radius:50%;background:transparent;
-  color:var(--cream);font-size:1.1rem;line-height:1;cursor:pointer;display:grid;place-items:center}
-.navmenu__x:hover{border-color:var(--cream)}
+.nav__close{appearance:none;-webkit-appearance:none;display:none;width:38px;height:38px;border:0;border-radius:50%;
+  background:var(--cream);color:var(--night);font-size:1rem;line-height:1;cursor:pointer;place-items:center}
+html.menu-open .nav__close{display:grid}
+html.menu-open .tog{display:none}
 .navmenu a[href^="#"]{font-family:"Fraunces",serif;font-weight:600;font-size:clamp(1.9rem,8.5vw,2.9rem);
   line-height:1.1;letter-spacing:-.02em;color:var(--cream);padding:.32em 0;border-bottom:1px solid rgba(251,244,224,.1)}
 .navmenu a[href^="#"]:last-of-type{border-bottom:0}
@@ -368,11 +368,11 @@ html.menu-open .nav__burger{visibility:hidden}
     </button>
     <button class="chip" id="chipCa" type="button">Copy CA&nbsp;·&nbsp;<span id="caShort">0x41b6…2b66</span></button>
     <button class="nav__burger" id="burger" type="button" aria-label="Open menu" aria-expanded="false"><span></span><span></span></button>
+    <button class="nav__close" id="navClose" type="button" aria-label="Close menu">&#10005;</button>
   </div>
 </header>
 
 <nav class="navmenu" id="navmenu" aria-hidden="true" aria-label="Menu">
-  <button class="navmenu__x" id="navmenuX" type="button" aria-label="Close menu">&#10005;</button>
   <a href="#story">The Story</a>
   <a href="#fire">On Chain</a>
   <a href="#how">How It Works</a>
@@ -737,7 +737,7 @@ var CONFIG = {
       m.setAttribute("aria-hidden", open ? "false" : "true");
     };
     b.addEventListener("click", function () { set(!m.classList.contains("open")); });
-    var xb = $("#navmenuX"); if (xb) xb.addEventListener("click", function () { set(false); });
+    var xb = $("#navClose"); if (xb) xb.addEventListener("click", function () { set(false); });
     $$('a[href^="#"]', m).forEach(function (a) { a.addEventListener("click", function () { set(false); }); });
     addEventListener("keydown", function (e) { if (e.key === "Escape") set(false); });
     var mc = $("#menuCa");
