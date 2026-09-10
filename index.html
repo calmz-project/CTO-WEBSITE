@@ -555,8 +555,8 @@ html.menu-open .nav__burger{visibility:hidden}
         <div class="forge__panel rv">
           <span class="forge__cap">Style</span>
           <div class="forge__styles" id="forgeStyles">
-            <button type="button" data-s="fireside" class="on">Fireside</button>
-            <button type="button" data-s="paper">Paper</button>
+            <button type="button" data-s="paper" class="on">Paper</button>
+            <button type="button" data-s="fireside">Fireside</button>
             <button type="button" data-s="bold">Bold</button>
           </div>
           <label for="forgeText">Your line</label>
@@ -883,7 +883,7 @@ var CONFIG = {
       if (cur) lines.push(cur);
       return lines.slice(0, 6);
     }
-    var STYLE = "fireside";
+    var STYLE = "paper";
 
     function quote(line, color, maxW, cy) {
       var len = line.length;
