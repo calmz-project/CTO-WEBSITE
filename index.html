@@ -336,15 +336,16 @@ html.menu-open .nav{background:transparent;color:var(--cream);border-color:trans
 </head>
 <body>
 <script>
-/* Set the theme before the page paints: a saved manual choice wins, otherwise
+/* Theme before first paint: an unexpired manual choice wins (8h), otherwise
    pick by the visitor's local time — light in the day, dark at night. */
 (function () {
+  var t = null;
   try {
-    var k = localStorage.getItem("cto-theme");
-    if (k === "dark" || k === "light") { document.documentElement.setAttribute("data-theme", k); return; }
+    var raw = localStorage.getItem("cto-theme");
+    if (raw) { var o = JSON.parse(raw); if (o && (o.t === "dark" || o.t === "light") && o.ts && Date.now() - o.ts < 288e5) t = o.t; }
   } catch (e) {}
-  var h = new Date().getHours();
-  document.documentElement.setAttribute("data-theme", (h >= 19 || h < 7) ? "dark" : "light");
+  if (!t) { var h = new Date().getHours(); t = (h >= 19 || h < 7) ? "dark" : "light"; }
+  document.documentElement.setAttribute("data-theme", t);
 })();
 </script>
 
@@ -448,7 +449,7 @@ html.menu-open .nav{background:transparent;color:var(--cream);border-color:trans
         <div><dt>Days lit</dt><dd id="stDays">&hellip;</dd></div>
       </dl>
       <p class="lede" style="margin-top:1.4rem;font-size:.82rem;color:rgba(251,244,224,.45)">
-        Highest it has printed so far: <b id="peak" style="color:rgba(251,244,224,.72);font-weight:600">about $7K</b>.
+        Highest it has printed so far: <b id="peak" style="color:rgba(251,244,224,.72);font-weight:600">$7K</b>.
       </p>
     </div>
   </section>
@@ -610,7 +611,7 @@ var CONFIG = {
   supply   : "1,000,000,000",
   tax      : "3 / 3",
   maxWallet: "3%",               /* 3% of supply per wallet, set by the community */
-  peakLabel: "about $7K",        /* ATH shown under the live grid. This is the ONLY place it lives — change it here when the peak is beaten. */
+  peakFloorMc: 7000,             /* known all-time-high in USD; the live figure ratchets up from here on its own */
   startMc  : 100,                /* the hundred dollars the multiple is measured from */
   launchTs : 1786305647000,      /* pool-creation time; "days lit" ticks from this even offline */
 
@@ -660,7 +661,6 @@ var CONFIG = {
     set("#specCa", c.contract); set("#footCa", c.contract); set("#tokCa", c.contract);
     set("#specSupply", c.supply); set("#specTax", c.tax);
     set("#specMax", c.maxWallet || "…");
-    set("#peak", c.peakLabel);
     $$('a[href^="https://t.me"], #tg1, #tg2, #tg3').forEach(function (a) { a.href = c.telegram; });
     $$('a[href*="x.com/CTO"], #x1, #x2, #x3').forEach(function (a) { a.href = c.twitter; });
     $$("#buy1").forEach(function (a) { a.href = c.buyUrl; });
@@ -669,29 +669,35 @@ var CONFIG = {
     set("#yr", new Date().getFullYear());
   });
 
-  /* ---- theme: auto by local time (light in the day, dark at night),
-          overridden the moment someone taps the toggle ---- */
+  /* ---- theme: auto by local time; a tapped toggle overrides for 8 hours,
+          then the clock takes back over ---- */
   safe(function () {
-    var KEY = "cto-theme", saved = null;
-    try { saved = localStorage.getItem(KEY); } catch (e) {}
-    var manual = (saved === "dark" || saved === "light");
+    var KEY = "cto-theme";
     var byClock = function () { var h = new Date().getHours(); return (h >= 19 || h < 7) ? "dark" : "light"; };
-
+    var manual = function () {
+      try {
+        var raw = localStorage.getItem(KEY);
+        if (raw) { var o = JSON.parse(raw); if (o && (o.t === "dark" || o.t === "light") && o.ts && Date.now() - o.ts < 288e5) return o.t; }
+      } catch (e) {}
+      return null;
+    };
     var applyAuto = function () {
-      if (manual) return;
+      if (manual()) return;
       var want = byClock();
       if (root.getAttribute("data-theme") !== want) { root.setAttribute("data-theme", want); safe(renderForge); }
     };
-    root.setAttribute("data-theme", manual ? saved : byClock());
-    setInterval(applyAuto, 5 * 60 * 1000);   /* re-check as the day turns over */
+    root.setAttribute("data-theme", manual() || byClock());
+    setInterval(applyAuto, 3 * 60 * 1000);
 
     var b = $("#tog"); if (!b) return;
     b.addEventListener("click", function () {
       var cur = root.getAttribute("data-theme") || byClock();
       var next = cur === "dark" ? "light" : "dark";
-      manual = true; saved = next;
       root.setAttribute("data-theme", next);
-      try { localStorage.setItem(KEY, next); } catch (e) {}
+      try {
+        if (next === byClock()) localStorage.removeItem(KEY);          /* back in step with the clock: resume auto */
+        else localStorage.setItem(KEY, JSON.stringify({ t: next, ts: Date.now() }));
+      } catch (e) {}
       safe(renderForge);
     });
   });
@@ -785,9 +791,10 @@ var CONFIG = {
     var band = $("#fire"); if (!band) return;
     function money(n) {
       if (!(n > 0)) return "…";
-      if (n >= 1e9) return "$" + (n / 1e9).toFixed(2) + "B";
-      if (n >= 1e6) return "$" + (n / 1e6).toFixed(2) + "M";
-      if (n >= 1e3) return "$" + (n / 1e3).toFixed(1) + "K";
+      var trim = function (s) { return s.replace(/\.0+$/, ""); };
+      if (n >= 1e9) return "$" + trim((n / 1e9).toFixed(2)) + "B";
+      if (n >= 1e6) return "$" + trim((n / 1e6).toFixed(2)) + "M";
+      if (n >= 1e3) return "$" + trim((n / 1e3).toFixed(1)) + "K";
       return "$" + Math.round(n);
     }
     function price(p) {
@@ -814,6 +821,13 @@ var CONFIG = {
       set("#stTx", (v.buys24 || 0) + " / " + (v.sells24 || 0));
       set("#stDays", days());
       set("#stMult", mult(mc));
+
+      /* all-time high: a high-water mark that climbs on its own, never edited */
+      var ath = 0; try { ath = parseFloat(localStorage.getItem("cto-ath")) || 0; } catch (e) {}
+      ath = Math.max(ath, mc, CONFIG.peakFloorMc || 0);
+      if (live && mc > 0) { try { localStorage.setItem("cto-ath", ath); } catch (e) {} }
+      set("#peak", money(ath));
+
       band.classList.toggle("off", !live);
       var note = $("#liveNote");
       if (note) note.innerHTML = live
