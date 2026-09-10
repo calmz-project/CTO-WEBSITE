@@ -885,41 +885,44 @@ var CONFIG = {
     }
     var STYLE = "paper";
 
-    function quote(line, color, maxW, cy) {
+    function quote(line, color, maxW, cy, leftX) {
       var len = line.length;
       var size = len > 95 ? 50 : len > 58 ? 62 : 76;
       var font = "600 " + size + "px 'Fraunces', Georgia, serif";
       var lines = wrap(line, font, maxW);
-      x.font = font; x.fillStyle = color; x.textAlign = "center";
+      x.font = font; x.fillStyle = color;
+      x.textAlign = leftX != null ? "left" : "center";
+      var px = leftX != null ? leftX : W / 2;
       var lh = size * 1.24, startY = cy - (lines.length * lh) / 2 + size * 0.66;
-      for (var i = 0; i < lines.length; i++) x.fillText(lines[i], W / 2, startY + i * lh);
+      for (var i = 0; i < lines.length; i++) x.fillText(lines[i], px, startY + i * lh);
     }
-    function mark(y, wordColor, tagColor, tag) {
+    function mark(y, wordColor, tagColor, tagText, leftX) {
       x.font = "700 30px 'Fraunces', serif";
       var ctoW = x.measureText("$CTO").width, s = 52, gap = 14;
-      var groupW = (logoOK ? s + gap : 0) + ctoW, gx = W / 2 - groupW / 2;
+      var gx = leftX != null ? leftX : W / 2 - ((logoOK ? s + gap : 0) + ctoW) / 2;
       if (logoOK) x.drawImage(logo, gx, y - s + 8, s, s);
       x.textAlign = "left"; x.fillStyle = wordColor;
       x.fillText("$CTO", gx + (logoOK ? s + gap : 0), y);
-      if (tag) {
-        x.textAlign = "center"; x.fillStyle = tagColor;
-        x.font = "500 19px 'Hanken Grotesk', sans-serif";
-        x.fillText("community-take-over on BNB Chain", W / 2, y + 30);
+      if (tagText) {
+        x.fillStyle = tagColor; x.font = "500 19px 'Hanken Grotesk', sans-serif";
+        x.textAlign = leftX != null ? "left" : "center";
+        x.fillText(tagText, leftX != null ? gx : W / 2, y + 30);
       }
     }
 
     function drawFireside(line) {
-      var g = x.createRadialGradient(W / 2, H / 2, 40, W / 2, H / 2, H * 1.05);
-      g.addColorStop(0, "#241d10"); g.addColorStop(0.45, "#181307"); g.addColorStop(1, "#0c0a06");
+      var ox = W * 0.92, oy = H * 1.04;
+      var g = x.createRadialGradient(ox, oy, 40, ox, oy, H * 1.7);
+      g.addColorStop(0, "#2a2013"); g.addColorStop(0.4, "#1a140a"); g.addColorStop(1, "#0c0906");
       x.fillStyle = g; x.fillRect(0, 0, W, H);
-      x.strokeStyle = "rgba(255,233,176,.10)"; x.lineWidth = 2;
-      for (var k = 1; k <= 6; k++) { x.beginPath(); x.arc(W / 2, H / 2, k * 115, 0, TAU); x.stroke(); }
-      x.strokeStyle = "rgba(255,244,224,.18)"; x.strokeRect(30, 30, W - 60, H - 60);
-      x.textAlign = "center"; x.fillStyle = "rgba(255,244,224,.5)";
-      x.font = "600 22px 'Hanken Grotesk', sans-serif";
-      x.fillText("$ C T O   ·   T H E   P O W E R   O F   C O M M U N I T Y", W / 2, 100);
-      quote(line, "#fdf6e4", W - 260, H / 2);
-      mark(H - 96, "rgba(255,244,224,.85)", "rgba(255,244,224,.4)", true);
+      x.strokeStyle = "rgba(255,224,160,.12)"; x.lineWidth = 2;
+      for (var k = 1; k <= 6; k++) { x.beginPath(); x.arc(ox, oy, k * 132, 0, TAU); x.stroke(); }
+      x.strokeStyle = "rgba(255,244,224,.16)"; x.lineWidth = 1.5; x.strokeRect(34, 34, W - 68, H - 68);
+      x.textBaseline = "alphabetic"; x.textAlign = "left";
+      x.fillStyle = "rgba(255,244,224,.5)"; x.font = "600 21px 'Hanken Grotesk', sans-serif";
+      x.fillText("$ C T O   ·   T H E   P O W E R   O F   C O M M U N I T Y", 72, 96);
+      quote(line, "#fdf6e4", W - 470, H * 0.5, 90);
+      mark(H - 92, "rgba(255,244,224,.9)", "rgba(255,244,224,.45)", "community-take-over on BNB Chain", 72);
     }
     function drawPaper(line) {
       x.fillStyle = "#f1e3bb"; x.fillRect(0, 0, W, H);
@@ -929,7 +932,7 @@ var CONFIG = {
       x.fillText("$ C T O   ·   T H E   P O W E R   O F   C O M M U N I T Y", W / 2, 100);
       quote(line, "#171310", W - 260, H * 0.46);
       x.strokeStyle = "rgba(21,17,10,.22)"; x.beginPath(); x.moveTo(96, H - 150); x.lineTo(W - 96, H - 150); x.stroke();
-      mark(H - 92, "#171310", "rgba(21,17,10,.55)", true);
+      mark(H - 92, "#171310", "rgba(21,17,10,.55)", "community-take-over on BNB Chain");
     }
     function drawBold(line) {
       x.fillStyle = "#0c0a06"; x.fillRect(0, 0, W, H);
