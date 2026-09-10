@@ -4,7 +4,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>$CTO &middot; The Power of Community</title>
-<meta name="description" content="$CTO. A community launch on BNB Chain. A hundred dollars and a name the group agreed on. One billion supply, 3/3 tax, keys renounced. Live figures on-chain." />
+<meta name="description" content="$CTO. A community launch on BNB Chain. A hundred dollars and a name the group agreed on. One billion supply, 3/3 tax, liquidity locked 12 months. Live figures on-chain." />
 <meta name="theme-color" content="#100d08" />
 <meta property="og:title" content="$CTO &middot; The Power of Community" />
 <meta property="og:description" content="A hundred dollars and a name the group agreed on. Everything since has been a show of hands." />
@@ -268,6 +268,32 @@ html.menu-open .nav{background:transparent;color:var(--cream);border-color:trans
 @media (max-width:820px){.cards{grid-template-columns:1fr 1fr}}
 @media (max-width:520px){.cards{grid-template-columns:1fr}}
 
+/* ============================ TOKENOMICS ============================ */
+.alloc{margin-top:2.4rem;border:1px solid var(--on);height:64px;display:flex;overflow:hidden}
+.alloc span{display:flex;align-items:center;justify-content:center;background:var(--on);color:var(--surface);
+  font-family:"Fraunces",serif;font-weight:600;font-size:1rem;letter-spacing:.02em}
+.toks{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);border:1px solid var(--line);margin-top:1rem}
+.toks > *{background:var(--surface);padding:1.5rem 1.4rem;text-decoration:none;color:inherit;
+  transition:background .3s,transform .35s cubic-bezier(.2,1,.3,1)}
+.tok__n{font-family:"Fraunces",serif;font-weight:600;font-size:clamp(1.8rem,4.4vw,2.7rem);line-height:1;letter-spacing:-.02em}
+.tok__n .a{font-size:.5em;vertical-align:.15em}
+.tok__l{margin-top:.6rem;font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--on-mute)}
+.tok--link:hover{transform:translateY(-3px);background:var(--raise)}
+.tokrows{margin:2rem 0 0}
+.tokrows > div{display:flex;justify-content:space-between;gap:1.2rem;padding:.9rem 0;border-bottom:1px solid var(--line);font-size:.86rem}
+.tokrows > div:last-child{border-bottom:0}
+.tokrows dt{color:var(--on-mute);letter-spacing:.1em;text-transform:uppercase;font-size:.74rem}
+.tokrows dd{margin:0;text-align:right;word-break:break-all}
+.tokrows a{border-bottom:1px solid var(--line)}
+.tokrows a:hover{border-bottom-color:currentColor}
+.tokrows .ca{cursor:pointer}
+.tokrows .ca:hover{color:rgb(var(--fire))}
+@media (max-width:640px){.toks{grid-template-columns:1fr 1fr}}
+@media (max-width:520px){
+  .tokrows > div{flex-direction:column;align-items:flex-start;gap:.35rem}
+  .tokrows dd{text-align:left;white-space:nowrap;overflow-x:auto;font-size:clamp(.62rem,3vw,.86rem)}
+}
+
 /* ============================ MEME FORGE ============================ */
 .forge{display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:2rem 2.6rem;align-items:start;margin-top:2.4rem}
 .forge__stage{border:1px solid rgba(251,244,224,.16);background:#0b0906;padding:.8rem}
@@ -316,7 +342,7 @@ html.menu-open .nav{background:transparent;color:var(--cream);border-color:trans
 <header class="nav" id="nav">
   <a class="nav__brand" href="#top" aria-label="CTO"><img src="assets/img/logo.png" alt="" /><span>$CTO</span></a>
   <nav class="nav__links" aria-label="Primary">
-    <a href="#story">The Story</a><a href="#fire">On&nbsp;Chain</a><a href="#how">How It Works</a><a href="#forge">Make a Meme</a><a href="#circle">The Circle</a>
+    <a href="#story">The Story</a><a href="#fire">On&nbsp;Chain</a><a href="#how">How It Works</a><a href="#tokenomics">Tokenomics</a><a href="#forge">Make a Meme</a><a href="#circle">The Circle</a>
   </nav>
   <div class="nav__act">
     <button class="tog" id="tog" type="button" aria-label="Light or dark">
@@ -331,6 +357,7 @@ html.menu-open .nav{background:transparent;color:var(--cream);border-color:trans
   <a href="#story">The Story</a>
   <a href="#fire">On Chain</a>
   <a href="#how">How It Works</a>
+  <a href="#tokenomics">Tokenomics</a>
   <a href="#forge">Make a Meme</a>
   <a href="#circle">The Circle</a>
   <div class="navmenu__foot">
@@ -379,6 +406,7 @@ html.menu-open .nav{background:transparent;color:var(--cream);border-color:trans
           <div><dt>Supply</dt><dd id="specSupply">1,000,000,000</dd></div>
           <div><dt>Tax</dt><dd id="specTax">3 / 3</dd></div>
           <div><dt>Max wallet</dt><dd id="specMax">3%</dd></div>
+          <div><dt>Liquidity</dt><dd><a id="specLock" href="https://www.pinksale.finance/pinklock/bsc/record/1695599" target="_blank" rel="noopener" style="border-bottom:1px solid rgba(251,244,224,.35)">Locked 12mo ↗</a></dd></div>
           <div><dt>Contract</dt><dd class="ca" id="specCa">0x41b68a48446522de90d5dc590a595a2aceb42b66</dd></div>
         </dl>
       </div>
@@ -437,9 +465,9 @@ html.menu-open .nav{background:transparent;color:var(--cream);border-color:trans
           <p>$CTO went out with one instruction, <b>take it over</b>, and nothing else
           decided in advance. The group picked the name and the picture. It set the supply at
           <b>one billion</b> and the tax at <b>three and three</b>. It drew the max-wallet line itself.</p>
-          <p>Then the entire allocation went into the liquidity pool and the keys went to no one.
-          There is no treasury to spend, no team allocation to unlock, no quarter on a roadmap to
-          miss.</p>
+          <p>Then the entire allocation went into the liquidity pool, and that pool was locked for a
+          year on PinkSale. There is no treasury to spend, no team allocation to unlock, no quarter
+          on a roadmap to miss.</p>
           <p>It has been up and it has been down, and it has been discussed at length by people who
           have never held a single token. Through all of it the group has done the one thing a group
           can do that a founder cannot: <b>stay</b>.</p>
@@ -456,7 +484,7 @@ html.menu-open .nav{background:transparent;color:var(--cream);border-color:trans
         <p class="lede rv">Four plain facts. Verify every one of them yourself.</p>
       </div>
       <div class="cards">
-        <article class="card rv"><i>Liquidity</i><b>Keys with nobody</b><p>100% of supply seeded the pool at launch. No treasury wallet to drain, no vesting cliff to dread.</p></article>
+        <article class="card rv"><i>Liquidity</i><b>Locked, not held</b><p>100% of supply seeded the pool at launch and the LP is locked for a year on PinkSale. No treasury wallet, no vesting cliff.</p></article>
         <article class="card rv"><i>Governance</i><b>Decided in the open</b><p>Name, art, supply, tax, wallet cap: each one was a group call, on the record, before day one.</p></article>
         <article class="card rv"><i>Scope</i><b>Nothing pending</b><p>No "utility coming soon", no unreleased app. What is here is the whole of it.</p></article>
         <article class="card rv"><i>Proof</i><b>Public ledger</b><p>It's a token on BNB Chain. Read the contract, watch the pool, check the holders. Trust nothing on faith.</p></article>
@@ -464,11 +492,41 @@ html.menu-open .nav{background:transparent;color:var(--cream);border-color:trans
     </div>
   </section>
 
-  <!-- ============================ 03 · MEME FORGE ============================ -->
+  <!-- ============================ 03 · TOKENOMICS ============================ -->
+  <section class="band" id="tokenomics">
+    <div class="wrap">
+      <div class="head">
+        <p class="eyebrow rv">03 &middot; Tokenomics</p>
+        <p class="lede rv">One billion tokens. All of it in the pool, locked for a year.</p>
+      </div>
+
+      <div class="alloc rv" role="img" aria-label="100 percent of supply in the liquidity pool">
+        <span style="width:100%">100% &middot; Liquidity Pool</span>
+      </div>
+
+      <div class="toks">
+        <div class="tok rv"><div class="tok__n">3%</div><div class="tok__l">Buy tax</div></div>
+        <div class="tok rv"><div class="tok__n">3%</div><div class="tok__l">Sell tax</div></div>
+        <div class="tok rv"><div class="tok__n">3%</div><div class="tok__l">Max wallet</div></div>
+        <a class="tok tok--link rv" id="lockTile" href="https://www.pinksale.finance/pinklock/bsc/record/1695599" target="_blank" rel="noopener">
+          <div class="tok__n">12&nbsp;mo <span class="a">↗</span></div><div class="tok__l">Liquidity lock</div>
+        </a>
+      </div>
+
+      <dl class="tokrows rv">
+        <div><dt>Total supply</dt><dd>1,000,000,000 $CTO</dd></div>
+        <div><dt>Minting</dt><dd>Fixed supply &middot; none</dd></div>
+        <div><dt>Liquidity lock</dt><dd><a id="lockRow" href="https://www.pinksale.finance/pinklock/bsc/record/1695599" target="_blank" rel="noopener">PinkSale record &middot; 12 months ↗</a></dd></div>
+        <div><dt>Contract</dt><dd class="ca" id="tokCa">0x41b68a48446522de90d5dc590a595a2aceb42b66</dd></div>
+      </dl>
+    </div>
+  </section>
+
+  <!-- ============================ 04 · MEME FORGE ============================ -->
   <section class="band band--night" id="forge">
     <div class="wrap">
       <div class="head">
-        <p class="eyebrow rv">03 &middot; Make a Meme</p>
+        <p class="eyebrow rv">04 &middot; Make a Meme</p>
         <p class="lede rv">The gallery is whatever the community makes. Write a line, take the card, post it.</p>
       </div>
       <div class="forge">
@@ -492,7 +550,7 @@ html.menu-open .nav{background:transparent;color:var(--cream);border-color:trans
   <!-- ============================ 04 · THE CIRCLE ============================ -->
   <section class="band band--night close" id="circle">
     <div class="wrap">
-      <p class="eyebrow rv" style="justify-content:center">04 &middot; The Circle</p>
+      <p class="eyebrow rv" style="justify-content:center">05 &middot; The Circle</p>
       <h2 class="tell t2 rv" style="margin-top:1rem">Pull up a stool.<br /><em>The fire is already lit.</em></h2>
       <p class="lede rv" style="max-width:38ch;margin:1rem auto 0">Everything happens in the Telegram. That's the room.</p>
       <div class="row rv">
@@ -535,6 +593,8 @@ var CONFIG = {
   twitter  : "https://x.com/CTO_BNB",
   buyUrl   : "https://pancakeswap.finance/swap?outputCurrency=0x41b68a48446522de90d5dc590a595a2aceb42b66&chain=bsc",
   chartUrl : "https://listpad.xyz/coins/community-take-over",
+  lockUrl  : "https://www.pinksale.finance/pinklock/bsc/record/1695599",
+  lockLabel: "12 months",        /* liquidity-lock duration shown across the site */
   supply   : "1,000,000,000",
   tax      : "3 / 3",
   maxWallet: "3%",               /* 3% of supply per wallet, set by the community */
@@ -585,7 +645,7 @@ var CONFIG = {
   safe(function () {
     var c = CONFIG;
     set("#caShort", c.contract.slice(0, 6) + "…" + c.contract.slice(-4));
-    set("#specCa", c.contract); set("#footCa", c.contract);
+    set("#specCa", c.contract); set("#footCa", c.contract); set("#tokCa", c.contract);
     set("#specSupply", c.supply); set("#specTax", c.tax);
     set("#specMax", c.maxWallet || "…");
     set("#peak", c.peakLabel);
@@ -593,6 +653,7 @@ var CONFIG = {
     $$('a[href*="x.com/CTO"], #x1, #x2, #x3').forEach(function (a) { a.href = c.twitter; });
     $$("#buy1").forEach(function (a) { a.href = c.buyUrl; });
     $$("#chartLink, #chart3").forEach(function (a) { a.href = c.chartUrl; });
+    $$("#lockTile, #lockRow, #specLock").forEach(function (a) { if (c.lockUrl) a.href = c.lockUrl; });
     set("#yr", new Date().getFullYear());
   });
 
@@ -622,7 +683,7 @@ var CONFIG = {
       if (navigator.clipboard) navigator.clipboard.writeText(CONFIG.contract).then(function () { toast("Contract address copied"); }, function () { toast("Contract address copied"); });
       else toast("Contract address copied");
     }
-    ["#chipCa", "#footCa", "#specCa"].forEach(function (s) { var e = $(s); if (e) e.addEventListener("click", copy); });
+    ["#chipCa", "#footCa", "#specCa", "#tokCa"].forEach(function (s) { var e = $(s); if (e) e.addEventListener("click", copy); });
   });
 
   /* ---- nav tuck ---- */
