@@ -195,6 +195,11 @@ html.menu-open .nav{background:transparent;color:var(--cream);border-color:trans
   .hero__grid{grid-template-columns:1fr}
   .hero__spec{min-width:0;width:100%}
   .scrolldot{display:none}
+  /* contract: label on its own line, full address on one unbroken line below */
+  .hero__spec div:last-child{flex-direction:column;align-items:flex-start;gap:.4rem}
+  .hero__spec .ca{width:100%;text-align:left;word-break:normal;white-space:nowrap;
+    overflow-x:auto;-webkit-overflow-scrolling:touch;font-size:clamp(.6rem,3vw,.76rem);
+    font-variant-numeric:tabular-nums}
 }
 .scrolldot{position:absolute;left:50%;bottom:1.2rem;z-index:3;transform:translateX(-50%);width:1px;height:44px;background:rgba(251,244,224,.2);overflow:hidden}
 .scrolldot::after{content:"";position:absolute;inset:0;background:var(--cream);transform:translateY(-100%);animation:sd 2.4s cubic-bezier(.4,0,.2,1) infinite}
